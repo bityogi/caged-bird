@@ -1,5 +1,9 @@
 
-export const GET_USERS = 'GET_USERS';
+import {
+  LOGIN,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE
+} from 'actions/types';
 
 const initialState = {
   loading: false,
@@ -8,11 +12,18 @@ const initialState = {
 
 export default function usersReducer (state = initialState, action) {
 
-  if (action.type === GET_USERS) {
-    console.log('GET_USERS --> payload: ', action.payload);
-    return action.payload;
-  } else {
-    return state;
-  }
+  switch (action.type) {
+    case LOGIN:
+      return { ...initialState, loading: true };
 
+    case LOGIN_SUCCESS:
+      return { loading: false, ...state };
+
+    case LOGIN_FAILURE:
+      return { loading: false, data: [] };
+
+    default:
+      return state;
+  }
+  
 }

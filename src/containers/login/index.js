@@ -72,7 +72,7 @@ class LoginPage extends Component {
 }
 
 LoginPage.propTypes = {
-  user: PropTypes.object.isRequired,
+  users: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
   login: PropTypes.func.isRequired,
 };
