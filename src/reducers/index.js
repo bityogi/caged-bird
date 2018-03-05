@@ -4,10 +4,13 @@ import { routerReducer } from 'react-router-redux';
 
 import usersReducer from './users';
 import transactionsReducer from './transactions';
+import adminReducer from './admin';
+
 
 export default combineReducers({
   form: formReducer,
   routing: routerReducer,
+  admin: adminReducer,
   users: usersReducer,
   transactions: transactionsReducer
 });
