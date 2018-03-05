@@ -19,7 +19,7 @@ export const login = (credentials) => {
       dispatch({
         type: LOGIN_SUCCESS
       })
-      history.push('/transactions');
+      history.push('/landing');
 
     }, 3000)
   }

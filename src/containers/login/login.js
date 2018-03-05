@@ -60,14 +60,14 @@ class LoginUser extends Component {
           <div style={loginFormStyles.container}>
             <div style={loginFormStyles.userControls}>
               <div>
-                <label>User 1</label>
+                <label>Operator 1</label>
               </div>
 
                 <div>
                   <Field
                     name="username1"
                     component={TextField}
-                    floatingLabelText="Username"
+                    floatingLabelText="Operator 1"
                     />
                 </div>
 
@@ -83,14 +83,14 @@ class LoginUser extends Component {
 
             <div style={loginFormStyles.userControls}>
               <div>
-                <label>User 2</label>
+                <label>Operator 2</label>
               </div>
 
                 <div>
                   <Field
                     name="username2"
                     component={TextField}
-                    floatingLabelText="Username" />
+                    floatingLabelText="Operator 2" />
                 </div>
 
                 <div>
