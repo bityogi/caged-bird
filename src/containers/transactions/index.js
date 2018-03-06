@@ -16,10 +16,24 @@ import Paper from 'material-ui/Paper';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import CircularProgress from 'material-ui/CircularProgress';
-import {List, ListItem} from 'material-ui/List';
+import { List, ListItem } from 'material-ui/List';
 import ActionInfo from 'material-ui/svg-icons/action/info';
 
-import { pendingTransactions, transactionDetail } from 'actions';
+
+import {
+  pendingTransactions,
+  transactionDetail,
+  transactionExecute
+} from 'actions';
+import {
+  PENDING,
+  CREATING,
+  CREATED,
+  CREATE_ERROR,
+  SAVING,
+  SAVED,
+  SAVE_ERROR,
+} from 'util/transactionStatus';
 
 const styles = {
   headerColumn: {
@@ -52,8 +66,9 @@ class Transactions extends Component {
     this.setState({ open: false });
   }
 
-  handleTransactionSigning() {
+  handleTransactionExecution() {
     console.log('handle transaction signing');
+    this.props.transactionExecute(this.state.selectedTransaction);
   }
 
   handleRowSelection(index) {
@@ -61,8 +76,8 @@ class Transactions extends Component {
 
     console.log('selected transaction: ', selected);
     this.props.transactionDetail(selected.id);
-    this.setState({ open: true, selectedTransaction: selected.id })
-    // this.handleOpenTransactionDialog();
+    this.setState({ open: true, selectedTransaction: selected.id });
+
   }
 
   renderTransactions() {
@@ -94,17 +109,41 @@ class Transactions extends Component {
   }
 
   renderTransactionDialog() {
+
+
     const { transaction } = this.props;
+    const executionStatus = transaction.execution.status;
+    const { detail } = transaction;
+
+    const actionStyles = {
+      executeButton: {
+        display: executionStatus === PENDING ? 'inline-block' : 'none',
+      },
+      cancelButton: {
+
+      },
+      okButton: {
+        display: executionStatus === SAVED ? 'inline-block' : 'none',
+      }
+    };
+
     const actions = [
+
       <FlatButton
         label="Execute"
         primary={true}
         keyboardFocused={true}
-        onClick={this.handleTransactionSigning.bind(this)}
+        onClick={this.handleTransactionExecution.bind(this)}
+        style={actionStyles.executeButton}
       />,
       <FlatButton
         label="Cancel"
         onClick={this.handleCloseTransactionDialog.bind(this)}
+      />,
+      <FlatButton
+        label="OK"
+        onClick={this.handleCloseTransactionDialog.bind(this)}
+        style={actionStyles.okButton}
       />
     ]
 
@@ -117,64 +156,81 @@ class Transactions extends Component {
         onRequesetClose={this.handleCloseTransactionDialog.bind(this)}
       >
         {
-          transaction.loading ?
+          detail.loading ?
             <CircularProgress />
             :
-            <List>
-              <ListItem
-                primaryText="Transaction ID"
-                secondaryText={transaction.data.id}
-                leftIcon={<ActionInfo />}
-              />
-              <ListItem
-                primaryText="Client"
-                secondaryText={transaction.data.client}
-                leftIcon={<ActionInfo />}
-              />
-              <ListItem
-                primaryText="Coin"
-                secondaryText={transaction.data.coin}
-                leftIcon={<ActionInfo />}
-              />
-              <ListItem
-                primaryText="Account"
-                secondaryText={transaction.data.account}
-                leftIcon={<ActionInfo />}
-              />
-              <ListItem
-                primaryText="Cold Wallet"
-                secondaryText={transaction.data.coldWallet}
-                leftIcon={<ActionInfo />}
-              />
-              <ListItem
-                primaryText="Hot Wallet"
-                secondaryText={transaction.data.hotWallet}
-                leftIcon={<ActionInfo />}
-              />
-              <ListItem
-                primaryText="Amount"
-                secondaryText={transaction.data.amount} 
-                leftIcon={<ActionInfo />}
-              />
-              <ListItem
-                primaryText="Fee"
-                secondaryText={transaction.data.fee}
-                leftIcon={<ActionInfo />}
-              />
-              <ListItem
-                primaryText="Memo"
-                secondaryText={transaction.data.memo}
-                leftIcon={<ActionInfo />}
-              />
-              <ListItem
-                primaryText="Gen Time"
-                secondaryText={transaction.data.genTime}
-                leftIcon={<ActionInfo />}
-              />
-            </List>
+            executionStatus === PENDING ?
+
+              <List>
+                <ListItem
+                  primaryText="Transaction ID"
+                  secondaryText={detail.data.id}
+                  leftIcon={<ActionInfo />}
+                />
+                <ListItem
+                  primaryText="Client"
+                  secondaryText={detail.data.client}
+                  leftIcon={<ActionInfo />}
+                />
+                <ListItem
+                  primaryText="Coin"
+                  secondaryText={detail.data.coin}
+                  leftIcon={<ActionInfo />}
+                />
+                <ListItem
+                  primaryText="Account"
+                  secondaryText={detail.data.account}
+                  leftIcon={<ActionInfo />}
+                />
+                <ListItem
+                  primaryText="Cold Wallet"
+                  secondaryText={detail.data.coldWallet}
+                  leftIcon={<ActionInfo />}
+                />
+                <ListItem
+                  primaryText="Hot Wallet"
+                  secondaryText={detail.data.hotWallet}
+                  leftIcon={<ActionInfo />}
+                />
+                <ListItem
+                  primaryText="Amount"
+                  secondaryText={detail.data.amount}
+                  leftIcon={<ActionInfo />}
+                />
+                <ListItem
+                  primaryText="Fee"
+                  secondaryText={detail.data.fee}
+                  leftIcon={<ActionInfo />}
+                />
+                <ListItem
+                  primaryText="Memo"
+                  secondaryText={detail.data.memo}
+                  leftIcon={<ActionInfo />}
+                />
+                <ListItem
+                  primaryText="Gen Time"
+                  secondaryText={detail.data.genTime}
+                  leftIcon={<ActionInfo />}
+                />
+              </List>
+              :
+              this.renderTransactionExecution()
         }
 
       </Dialog>
+    )
+  }
+
+  renderTransactionExecution() {
+    const { transaction } = this.props;
+    const executionStatus = transaction.execution.status;
+
+    return (
+      <div>
+        <span>Creating unsigned transaction and writing data</span>
+        <br />
+        <span>Status: {executionStatus}</span>
+      </div>
     )
   }
 
@@ -210,7 +266,8 @@ class Transactions extends Component {
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   pendingTransactions,
-  transactionDetail
+  transactionDetail,
+  transactionExecute
 }, dispatch)
 
 const mapStateToProps = (state) => ({

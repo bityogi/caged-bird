@@ -1,6 +1,7 @@
 import {
   PENDING_TRANSACTIONS,
   TRANSACTION_DETAIL,
+  TRANSACTION_EXECUTION,
 
   FETCH_START,
   FETCH_END,
@@ -8,6 +9,15 @@ import {
   FETCH_CANCEL,
 } from './types';
 
+
+import {
+  CREATING,
+  CREATED,
+  CREATE_ERROR,
+  SAVING,
+  SAVED,
+  SAVE_ERROR,
+} from 'util/transactionStatus';
 // temporary code
 const pendingTransactionsPayload = [
   {
@@ -112,5 +122,48 @@ export const transactionDetail = (id) => {
       });
 
     }, 3000)
+  }
+}
+
+export const transactionExecute = (id) => {
+  console.log('executing transaction with id: ', id);
+
+  return dispatch => {
+    dispatch({
+      type: FETCH_START
+    });
+
+    dispatch({
+      type: TRANSACTION_EXECUTION,
+      payload: {
+        status: CREATING
+      }
+    });
+
+    return setTimeout(() => {
+      dispatch({
+        type: TRANSACTION_EXECUTION,
+        payload: {
+          status: SAVING
+        }
+      });
+
+
+      return setTimeout(() => {
+
+        dispatch({
+          type: TRANSACTION_EXECUTION,
+          payload: {
+            status: SAVED
+          }
+        });
+        dispatch({
+          type: FETCH_END
+        });
+
+      }, 3000);
+
+    }, 3000);
+
   }
 }

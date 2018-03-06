@@ -7,7 +7,7 @@ const initialState = {
   data: {}
 }
 
-export default function transactionReducer (state = initialState, action) {
+export default function transactionDetailReducer (state = initialState, action) {
   switch (action.type) {
     case TRANSACTION_DETAIL:
       return action.payload;
