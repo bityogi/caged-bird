@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import EjectAction from 'material-ui/svg-icons/action/eject';
+import { withRouter } from 'react-router-dom';
+
+import { logout } from 'actions';
 
 const style = {
   margin: 12,
@@ -9,7 +14,11 @@ const style = {
 
 class Landing extends Component {
 
+
+
   render() {
+    const { logout, history } = this.props;
+
     return (
       <Card>
         <CardHeader
@@ -18,9 +27,24 @@ class Landing extends Component {
         />
 
         <CardActions>
-          <RaisedButton label="Create Unsigned Transaction" style={style} primary={true} />
-          <RaisedButton label="Broadcast Signed Transaction" style={style} secondary={true} />
-          <RaisedButton label="Log Out" style={style} icon={<EjectAction />} />
+          <RaisedButton
+            label="Create Unsigned Transaction"
+            style={style}
+            primary={true}
+            onClick={() => history.push('/transactions')}
+          />
+          <RaisedButton
+            label="Broadcast Signed Transaction"
+            style={style}
+            secondary={true}
+            onClick={() => history.push('/broadcast')}
+          />
+          <RaisedButton
+            label="Log Out"
+            style={style}
+            icon={<EjectAction />}
+            onClick={() => logout()}
+          />
         </CardActions>
 
       </Card>
@@ -29,4 +53,9 @@ class Landing extends Component {
   }
 }
 
-export default Landing;
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  logout
+}, dispatch)
+
+export default connect(null, mapDispatchToProps)(withRouter(Landing));

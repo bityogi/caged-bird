@@ -26,6 +26,7 @@ export const login = (credentials) => {
 }
 
 export const logout = () => {
+  console.log('logging out');
   return {
     type: LOGOUT
   }

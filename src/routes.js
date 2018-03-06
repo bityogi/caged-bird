@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import Login from 'containers/login';
 import Transactions from 'containers/transactions';
 import Landing from 'components/landing';
+import Broadcast from 'containers/broadcast';
 
 export default () => {
   return (
@@ -11,6 +12,7 @@ export default () => {
       <Route exact path="/" component={Login} />
       <Route exact path="/landing" component={Landing} />
       <Route exact path="/transactions" component={Transactions} />
+      <Route exact path="/broadcast" component={Broadcast} />
     </Switch>
   )
 
