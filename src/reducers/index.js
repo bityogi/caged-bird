@@ -4,6 +4,7 @@ import { routerReducer } from 'react-router-redux';
 
 import usersReducer from './users';
 import transactionsReducer from './transactions';
+import transactionReducer from './transaction';
 import adminReducer from './admin';
 
 
@@ -12,5 +13,6 @@ export default combineReducers({
   routing: routerReducer,
   admin: adminReducer,
   users: usersReducer,
-  transactions: transactionsReducer
+  transactions: transactionsReducer,
+  transaction: transactionReducer,
 });

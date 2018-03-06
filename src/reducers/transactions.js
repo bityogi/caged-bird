@@ -1,5 +1,7 @@
+import {
+  PENDING_TRANSACTIONS
+} from 'actions/types';
 
-export const PENDING_TRANSACTIONS = 'PENDING_TRANSACTIONS';
 
 const initialState = {
   data: []

@@ -1,5 +1,7 @@
 import {
   PENDING_TRANSACTIONS,
+  TRANSACTION_DETAIL,
+
   FETCH_START,
   FETCH_END,
   FETCH_ERROR,
@@ -50,6 +52,7 @@ const transactionDetailPayload = {
   coldWallet: 'Wallet 1',
   hotWallet: '1f4567yggt',
   amount: 231.66,
+  fee: 12.55,
   memo: 'This transaction is good and will be executed soon',
   genTime: '1/1/2018 2:36PM'
 };
@@ -88,7 +91,22 @@ export const transactionDetail = (id) => {
       type: FETCH_START
     });
 
+    dispatch({
+      type: TRANSACTION_DETAIL,
+      payload: {
+        loading: true,
+        data: {}
+      }
+    })
+
     return setTimeout(() => {
+      dispatch({
+        type: TRANSACTION_DETAIL,
+        payload: {
+          loading: false,
+          data: transactionDetailPayload
+        }
+      })
       dispatch({
         type: FETCH_END
       });
