@@ -1,4 +1,5 @@
-export const PENDING = 'PENDING';
+export const RETRIEVING = 'RETRIEVING';
+export const RETRIEVED = 'RETRIEVED';
 export const SUBMITTING = 'SUBMITTING';
 export const SUBMITTED = 'SUBMITTED';
 export const SUBMIT_ERROR = 'SUBMIT_ERROR';

@@ -6,6 +6,7 @@ import usersReducer from './users';
 import transactionsReducer from './transactions';
 import transactionReducer from './transaction';
 import adminReducer from './admin';
+import signedReducer from './signed';
 
 
 export default combineReducers({
@@ -15,4 +16,5 @@ export default combineReducers({
   users: usersReducer,
   transactions: transactionsReducer,
   transaction: transactionReducer,
+  signed: signedReducer,
 });

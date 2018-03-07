@@ -9,7 +9,8 @@ import {
 } from './types';
 
 import {
-  PENDING,
+  RETRIEVING,
+  RETRIEVED,
   SUBMITTING,
   SUBMIT_ERROR,
   SUBMITTED,
@@ -44,6 +45,11 @@ export const signedTransaction = () => {
       type: FETCH_START
     });
 
+    dispatch({
+      type: BROADCAST_STATUS,
+      payload: RETRIEVING
+    });
+
     return setTimeout(() => {
       dispatch({
         type: BROADCAST_DETAIL,
@@ -51,7 +57,13 @@ export const signedTransaction = () => {
           loading: false,
           data: broadcastTransactionPayload
         }
-      })
+      });
+
+      dispatch({
+        type: BROADCAST_STATUS,
+        payload: RETRIEVED
+      });
+
       dispatch({
         type: FETCH_END
       });
@@ -69,9 +81,7 @@ export const broadcastTransaction = () => {
 
     dispatch({
       type: BROADCAST_STATUS,
-      payload: {
-        status: SUBMITTING
-      }
+      payload: SUBMITTING
     });
 
     return setTimeout(() => {

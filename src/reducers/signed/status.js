@@ -3,14 +3,14 @@ import {
 } from 'actions/types';
 
 import {
-  PENDING,
+  RETRIEVING,
+  RETRIEVED,
   SUBMITTED,
   SAVED
 } from 'util/broadcastStatus';
 
-const initialState = {
-  status: PENDING
-}
+const initialState = null
+
 
 export default function transactionDetailReducer (state = initialState, action) {
   switch (action.type) {

@@ -31,21 +31,25 @@ const validate = values => {
   const errors = {}
 
   if (!values.username1) {
-    errors.username1 = 'Required'
+    errors.username1 = 'Required';
   }
 
   if (!values.password1) {
-    errors.password1 = 'Required'
+    errors.password1 = 'Required';
+  } else if (values.password1.length < 15) {
+    errors.password1 = 'Should be atleast 15 characters';
   }
 
   if (!values.username2) {
-    errors.username2 = 'Required'
+    errors.username2 = 'Required';
   }
 
   if (!values.password2) {
-    errors.password2 = 'Required'
+    errors.password2 = 'Required';
+  } else if (values.password2.length < 15) {
+    errors.password2 = 'Should be atleast 15 characters';
   }
-  return errors
+  return errors;
 }
 
 
