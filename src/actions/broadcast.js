@@ -14,9 +14,6 @@ import {
   SUBMITTING,
   SUBMIT_ERROR,
   SUBMITTED,
-  SAVING,
-  SAVED,
-  SAVE_ERROR,
 } from 'util/broadcastStatus';
 
 
@@ -87,23 +84,8 @@ export const broadcastTransaction = () => {
     return setTimeout(() => {
       dispatch({
         type: BROADCAST_STATUS,
-        payload: {
-          status: SUBMITTED
-        }
+        payload:  SUBMITTED
       });
-
-      return setTimeout(() => {
-        dispatch({
-          type: BROADCAST_STATUS,
-          payload: {
-            status: SAVED
-          }
-        });
-        dispatch({
-          type: FETCH_END
-        });
-
-      }, 3000)
 
     }, 3000)
   }

@@ -5,6 +5,7 @@ import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
 import { CardTitle } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
+import { withRouter } from 'react-router-dom';
 
 import TransactionDetail from 'components/transactionDetail';
 import {
@@ -15,7 +16,9 @@ import {
 import {
   RETRIEVING,
   RETRIEVED,
+  SUBMITTING,
   SUBMITTED,
+  SAVING,
   SAVED
 } from 'util/broadcastStatus';
 
@@ -26,7 +29,8 @@ class Broadcast extends Component {
   }
 
   handleTransactionBroadcast() {
-
+    console.log('Broadcasting transaction');
+    this.props.broadcastTransaction();
   }
 
   handleCancelBroadcast() {
@@ -40,12 +44,12 @@ class Broadcast extends Component {
   }
 
   renderSignedTransaction() {
-    const { signed } = this.props;
+    const { signed, history } = this.props;
     switch (signed.status) {
       case RETRIEVING:
         return (
           <span>Retrieving signed transaction ...</span>
-        )
+        );
 
       case RETRIEVED:
         return (
@@ -65,9 +69,28 @@ class Broadcast extends Component {
             </CardActions>
           </Card>
 
-        )
-      default:
+        );
+       case SUBMITTING:
+        return (
+          <span>Submitting transaction for broadcast ...</span>
+        );
 
+       case SUBMITTED:
+        return (
+          <div>
+            <div>Transaction successfully submitted for broadcast ..</div>
+
+              <RaisedButton
+                label="Home"
+                primary={true}
+                onClick={() => history.push('/')}
+              />
+          </div>
+        );
+
+
+      default:
+        return null;
     }
   }
 
@@ -126,4 +149,4 @@ const mapStateToProps = (state) => ({
 })
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Broadcast);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Broadcast));
