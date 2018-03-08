@@ -19,10 +19,12 @@ const styles = {
     marginLeft: 25,
     cursor: 'pointer',
     color: textColor,
+    fontSize: '1.8em',
   },
   logo: {
-    marginRight: 24,
-    paddingTop: 3,
+    marginRight: 50,
+    marginTop: 3,
+    marginBottom: 3,
 
   },
   toolbar: {
@@ -57,7 +59,7 @@ class Header extends Component {
 
 
           <ToolbarGroup>
-            <img src={logo} height={50} width={100} style={styles.logo} />
+            <img src={logo} height={48} width={120} style={styles.logo} />
           </ToolbarGroup>
 
         </Toolbar>

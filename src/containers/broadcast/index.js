@@ -6,6 +6,8 @@ import { CardTitle } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import { withRouter } from 'react-router-dom';
+import FontIcon from 'material-ui/FontIcon';
+import LinearProgress from 'material-ui/LinearProgress';
 
 import TransactionDetail from 'components/transactionDetail';
 import {
@@ -22,6 +24,19 @@ import {
   SAVED
 } from 'util/broadcastStatus';
 
+import theme from 'theme';
+
+const { palette: { primary1Color} } = theme;
+
+const styles = {
+  iconStyles: {
+    marginRight: 25,
+    color: primary1Color,
+  },
+  progressBar: {
+    marginTop: 25,
+  }
+}
 class Broadcast extends Component {
 
   state = {
@@ -48,7 +63,14 @@ class Broadcast extends Component {
     switch (signed.status) {
       case RETRIEVING:
         return (
-          <span>Retrieving signed transaction ...</span>
+          <div>
+            <FontIcon className="material-icons" style={styles.iconStyles}>usb</FontIcon>
+            <span>Retrieving signed transaction ...</span>
+            <div>
+              <LinearProgress mode="indeterminate" style={styles.progressBar} />
+            </div>
+          </div>
+
         );
 
       case RETRIEVED:
@@ -109,7 +131,8 @@ class Broadcast extends Component {
         margin: 5,
         padding: 5,
 
-      }
+      },
+
     };
 
     const { status } = this.props.signed;
