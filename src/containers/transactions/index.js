@@ -35,15 +35,16 @@ import {
   SAVED,
   SAVE_ERROR,
 } from 'util/transactionStatus';
+import { formatAmount, formatDate } from 'util/format';
 
 const styles = {
   headerColumn: {
-    textAlign: 'center',
+    textAlign: 'left',
     fontSize: '1.1em',
   },
 
   rowColumn: {
-    textAlign: 'center',
+    // textAlign: 'center',
 
   }
 }
@@ -54,7 +55,7 @@ class Transactions extends Component {
     selectedTransaction: null
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.pendingTransactions();
   }
 
@@ -82,15 +83,19 @@ class Transactions extends Component {
   }
 
   renderTransactions() {
+
     const { transactions } = this.props;
     if (_.isEmpty(transactions)) {
       return (
         <TableRow key={0}>
-          <TableRowColumn colspan="5">No Transactions to display</TableRowColumn>
+          <TableRowColumn colSpan="5">No Transactions to display</TableRowColumn>
          </TableRow>
       );
     } else {
+      console.log('rendering Transactions: ');
       return _.map(transactions, (t, i) => {
+        const code = 'BTC';
+        console.log('genTime: ', t.genTime);
         return (
           <TableRow
             hoverable={true}
@@ -98,11 +103,11 @@ class Transactions extends Component {
             value={t}
             style={{ textAlign: 'center' }}
           >
-            <TableRowColumn style={{ width: '30%', ...styles.rowColumn }}>{t.client}</TableRowColumn>
+            <TableRowColumn style={{ width: '20%', ...styles.rowColumn }}>{t.client}</TableRowColumn>
             <TableRowColumn style={{ width: '20%', ...styles.rowColumn }}>{t.coin}</TableRowColumn>
-            <TableRowColumn style={{ width: '20%', ...styles.rowColumn }}>{t.account}</TableRowColumn>
-            <TableRowColumn style={{ width: '10%', ...styles.rowColumn }}>{t.amount}</TableRowColumn>
-            <TableRowColumn style={{ width: '20%', ...styles.rowColumn }}>{t.genTime}</TableRowColumn>
+            <TableRowColumn style={{ width: '15%', ...styles.rowColumn }}>{t.account}</TableRowColumn>
+            <TableRowColumn style={{ width: '25%', ...styles.rowColumn }}>{`${code} ${Number.parseFloat(t.amount).toFixed(8)}`}</TableRowColumn>
+            <TableRowColumn style={{ width: '20%', ...styles.rowColumn }}>{formatDate(t.genTime)}</TableRowColumn>
           </TableRow>
         )
       })
@@ -189,12 +194,12 @@ class Transactions extends Component {
       <Paper>
         <CardTitle title={'Pending Transactions'} />
         <Table onRowSelection={this.handleRowSelection.bind(this)}>
-          <TableHeader displaySelectAll={false} enableSelectAll={false}>
+          <TableHeader displaySelectAll={false} enableSelectAll={false} adjustForCheckbox={false}>
             <TableRow>
-              <TableHeaderColumn style={{ ...styles.headerColumn, width: '30%' }}>Client</TableHeaderColumn>
+              <TableHeaderColumn style={{ ...styles.headerColumn, width: '20%' }}>Client</TableHeaderColumn>
               <TableHeaderColumn style={{ ...styles.headerColumn, width: '20%' }}>Coin</TableHeaderColumn>
-              <TableHeaderColumn style={{ ...styles.headerColumn, width: '20%' }}>Account</TableHeaderColumn>
-              <TableHeaderColumn style={{ ...styles.headerColumn, width: '10%' }}>Amount</TableHeaderColumn>
+              <TableHeaderColumn style={{ ...styles.headerColumn, width: '15%' }}>Account</TableHeaderColumn>
+              <TableHeaderColumn style={{ ...styles.headerColumn, width: '25%' }}>Amount</TableHeaderColumn>
               <TableHeaderColumn style={{ ...styles.headerColumn, width: '20%' }}>Gen Time</TableHeaderColumn>
             </TableRow>
           </TableHeader>

@@ -26,7 +26,7 @@ const pendingTransactionsPayload = [
     coin: 'Bitcoin',
     account: 'OffShore',
     amount: 231.66,
-    genTime: '1/1/2018'
+    genTime: '2018-03-07T09:18:26-05:00'
   },
   {
     id: '1235',
@@ -34,7 +34,7 @@ const pendingTransactionsPayload = [
     coin: 'Bitcoin',
     account: 'OffShore',
     amount: 1234.60,
-    genTime: '1/1/2018'
+    genTime: '2018-03-07T09:18:26-05:00'
   },
   {
     id: '1236',
@@ -42,7 +42,7 @@ const pendingTransactionsPayload = [
     coin: 'Litecoin - ugh',
     account: 'OffShore',
     amount: 56.22,
-    genTime: '1/1/2018'
+    genTime: '2018-03-07T09:18:26-05:00'
   },
   {
     id: '1237',
@@ -50,7 +50,7 @@ const pendingTransactionsPayload = [
     coin: 'Ethereum - ugh',
     account: 'Western',
     amount: 4531.99,
-    genTime: '1/1/2018'
+    genTime: '2018-03-07T09:18:26-05:00'
   },
 ];
 
@@ -64,7 +64,7 @@ const transactionDetailPayload = {
   amount: 231.66,
   fee: 12.55,
   memo: 'This transaction is good and will be executed soon',
-  genTime: '1/1/2018 2:36PM'
+  genTime: '2018-03-07T09:18:26-05:00'
 };
 
 //

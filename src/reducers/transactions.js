@@ -3,9 +3,7 @@ import {
 } from 'actions/types';
 
 
-const initialState = {
-  data: []
-}
+const initialState = [];
 
 export default function transactionsReducer (state = initialState, action) {
 
