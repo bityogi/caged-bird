@@ -48,6 +48,12 @@ const validate = values => {
   } else if (values.password2.length < 15) {
     errors.password2 = 'Should be atleast 15 characters';
   }
+
+  if (values.username1 && values.username2) {
+    if (values.username1 === values.username2) {
+      errors.username2 = 'Same username credentials provided';
+    }
+  }
   return errors;
 }
 

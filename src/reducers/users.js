@@ -2,12 +2,13 @@
 import {
   LOGIN,
   LOGIN_SUCCESS,
-  LOGIN_FAILURE
+  LOGIN_FAILURE,
+  LOGOUT,
 } from 'actions/types';
 
 const initialState = {
   loading: false,
-  data: []
+  data: {}
 }
 
 export default function usersReducer (state = initialState, action) {
@@ -20,8 +21,10 @@ export default function usersReducer (state = initialState, action) {
       return { loading: false, data: action.payload };
 
     case LOGIN_FAILURE:
-      return { loading: false, data: [] };
+      return { loading: false, data: {} };
 
+    case LOGOUT:
+      return { loading: false, data: {} };
     default:
       return state;
   }

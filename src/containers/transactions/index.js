@@ -92,10 +92,8 @@ class Transactions extends Component {
          </TableRow>
       );
     } else {
-      console.log('rendering Transactions: ');
       return _.map(transactions, (t, i) => {
         const code = 'BTC';
-        console.log('genTime: ', t.genTime);
         return (
           <TableRow
             hoverable={true}
