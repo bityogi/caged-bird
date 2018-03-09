@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
-import Avatar from 'material-ui/Avatar';
-import FontIcon from 'material-ui/FontIcon';
+
 import { withRouter } from 'react-router-dom';
 
 import { logout } from 'actions';
@@ -59,7 +58,7 @@ class Header extends Component {
 
 
           <ToolbarGroup>
-            <img src={logo} height={48} width={120} style={styles.logo} />
+            <img src={logo} height={48} width={120} style={styles.logo} alt={'Caged-Bird'} />
           </ToolbarGroup>
 
         </Toolbar>

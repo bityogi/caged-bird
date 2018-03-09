@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
+import { Card, CardActions } from 'material-ui/Card';
 import { CardTitle } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
@@ -20,8 +20,6 @@ import {
   RETRIEVED,
   SUBMITTING,
   SUBMITTED,
-  SAVING,
-  SAVED
 } from 'util/broadcastStatus';
 
 import theme from 'theme';
@@ -135,7 +133,7 @@ class Broadcast extends Component {
 
     };
 
-    const { status } = this.props.signed;
+    // const { status } = this.props.signed;
     return (
       <Card>
 

@@ -5,7 +5,7 @@ import _ from 'lodash';
 import {
   Table,
   TableBody,
-  TableFooter,
+  // TableFooter,
   TableHeader,
   TableHeaderColumn,
   TableRow,
@@ -16,7 +16,7 @@ import Paper from 'material-ui/Paper';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import CircularProgress from 'material-ui/CircularProgress';
-import { List, ListItem } from 'material-ui/List';
+// import { List, ListItem } from 'material-ui/List';
 
 
 
@@ -28,14 +28,14 @@ import {
 } from 'actions';
 import {
   PENDING,
-  CREATING,
-  CREATED,
-  CREATE_ERROR,
-  SAVING,
+  // CREATING,
+  // CREATED,
+  // CREATE_ERROR,
+  // SAVING,
   SAVED,
-  SAVE_ERROR,
+  // SAVE_ERROR,
 } from 'util/transactionStatus';
-import { formatAmount, formatDate } from 'util/format';
+import { formatDate } from 'util/format';
 
 const styles = {
   headerColumn: {

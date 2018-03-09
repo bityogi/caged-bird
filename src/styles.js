@@ -1,6 +1,6 @@
 import theme from 'theme';
 
-const { palette : { primary1Color, primary2Color, primary3Color }} = theme;
+const { palette : { primary1Color }} = theme;
 
 const styles = {
   formStyle: {
@@ -15,9 +15,7 @@ const styles = {
   title_style : {
     marginRight: 20,
   },
-  card : {
-    textAlign: 'center',
-  },
+
   card_action_style : {
     padding: '10px'
   },

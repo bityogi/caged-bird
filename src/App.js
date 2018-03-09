@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import compose from 'recompose/compose';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -13,7 +12,7 @@ import { Header, Notification } from 'components';
 import Routes from './routes';
 import theme from './theme';
 
-import logo from './logo.svg';
+
 import './App.css';
 
 const styles = {

@@ -5,18 +5,18 @@ import {
 
   FETCH_START,
   FETCH_END,
-  FETCH_ERROR,
-  FETCH_CANCEL,
+  // FETCH_ERROR,
+  // FETCH_CANCEL,
 } from './types';
 
 
 import {
   CREATING,
-  CREATED,
-  CREATE_ERROR,
+  // CREATED,
+  // CREATE_ERROR,
   SAVING,
   SAVED,
-  SAVE_ERROR,
+  // SAVE_ERROR,
 } from 'util/transactionStatus';
 // temporary code
 const pendingTransactionsPayload = [

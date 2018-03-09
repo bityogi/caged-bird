@@ -1,7 +1,7 @@
 import {
   LOGIN,
   LOGIN_SUCCESS,
-  LOGIN_FAILURE,
+  // LOGIN_FAILURE,
   LOGOUT,
 } from './types';
 

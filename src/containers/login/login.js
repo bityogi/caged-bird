@@ -5,7 +5,6 @@ import { TextField } from 'redux-form-material-ui';
 import { CardActions } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import CircularProgress from 'material-ui/CircularProgress';
-import { Link } from 'react-router-dom';
 
 import styles from 'styles';
 import theme from 'theme';

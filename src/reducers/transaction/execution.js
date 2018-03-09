@@ -4,12 +4,12 @@ import {
 
 import {
   PENDING,
-  CREATING,
-  CREATED,
-  CREATE_ERROR,
-  SAVING,
-  SAVED,
-  SAVE_ERROR,
+  // CREATING,
+  // CREATED,
+  // CREATE_ERROR,
+  // SAVING,
+  // SAVED,
+  // SAVE_ERROR,
 } from 'util/transactionStatus';
 
 const initialState = {

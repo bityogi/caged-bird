@@ -4,15 +4,15 @@ import {
 
   FETCH_START,
   FETCH_END,
-  FETCH_ERROR,
-  FETCH_CANCEL,
+  // FETCH_ERROR,
+  // FETCH_CANCEL,
 } from './types';
 
 import {
   RETRIEVING,
   RETRIEVED,
   SUBMITTING,
-  SUBMIT_ERROR,
+  // SUBMIT_ERROR,
   SUBMITTED,
 } from 'util/broadcastStatus';
 

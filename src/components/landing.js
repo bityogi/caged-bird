@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
+import { Card, CardActions, CardHeader } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import EjectAction from 'material-ui/svg-icons/action/eject';
 import { withRouter } from 'react-router-dom';
