@@ -25,7 +25,6 @@ export const formatAmountToParts = (number, code) => {
 }
 
 export const formatDate = (value) => {
-  console.log('formatting date: ', value);
   const options = {
     year: 'numeric', month: 'numeric', day: 'numeric',
     hour: 'numeric', minute: 'numeric', second: 'numeric',

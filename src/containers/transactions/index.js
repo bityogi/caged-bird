@@ -24,16 +24,17 @@ import TransactionDetail from 'components/transactionDetail';
 import {
   pendingTransactions,
   transactionDetail,
-  transactionExecute
+  transactionExecute,
+  initializeTransaction
 } from 'actions';
 import {
   PENDING,
-  // CREATING,
-  // CREATED,
-  // CREATE_ERROR,
-  // SAVING,
+  CREATING,
+  CREATED,
+  CREATE_ERROR,
+  SAVING,
   SAVED,
-  // SAVE_ERROR,
+  SAVE_ERROR,
 } from 'util/transactionStatus';
 import { formatDate } from 'util/format';
 
@@ -49,11 +50,17 @@ const styles = {
   }
 }
 class Transactions extends Component {
+  constructor(props) {
+    super(props);
 
-  state = {
-    open: false,
-    selectedTransaction: null
-  };
+    this.state = {
+      open: false,
+      selectedTransaction: null
+    };
+
+    this.handleCloseTransactionDialog = this.handleCloseTransactionDialog.bind(this);
+  }
+
 
   componentDidMount() {
     this.props.pendingTransactions();
@@ -63,9 +70,12 @@ class Transactions extends Component {
     this.setState({ open: true });
   }
 
-  handleCloseTransactionDialog() {
+  handleCloseTransactionDialog(initialize) {
     console.log('closing transaction signing window');
-    this.setState({ open: false });
+    this.setState({ open: false, selectedTransaction: null });
+    if (initialize) {
+      this.props.initializeTransaction();
+    }
   }
 
   handleTransactionExecution() {
@@ -119,15 +129,24 @@ class Transactions extends Component {
     const executionStatus = transaction.execution.status;
     const { detail } = transaction;
 
+    const okStatusOptions = [
+      CREATING,
+      CREATED,
+      CREATE_ERROR,
+      SAVING,
+      SAVED,
+      SAVE_ERROR,
+    ]
+
     const actionStyles = {
       executeButton: {
         display: executionStatus === PENDING ? 'inline-block' : 'none',
       },
       cancelButton: {
-
+        display: executionStatus === PENDING ? 'inline-block' : 'none',
       },
       okButton: {
-        display: executionStatus === SAVED ? 'inline-block' : 'none',
+        display: okStatusOptions.includes(executionStatus) ? 'inline-block' : 'none',
       }
     };
 
@@ -142,12 +161,14 @@ class Transactions extends Component {
       />,
       <FlatButton
         label="Cancel"
-        onClick={this.handleCloseTransactionDialog.bind(this)}
+        onClick={() => this.handleCloseTransactionDialog(false)}
+        style={actionStyles.cancelButton}
       />,
       <FlatButton
         label="OK"
-        onClick={this.handleCloseTransactionDialog.bind(this)}
+        onClick={() => this.handleCloseTransactionDialog(true)}
         style={actionStyles.okButton}
+        disabled={executionStatus !== SAVED}
       />
     ]
 
@@ -219,7 +240,8 @@ class Transactions extends Component {
 const mapDispatchToProps = dispatch => bindActionCreators({
   pendingTransactions,
   transactionDetail,
-  transactionExecute
+  transactionExecute,
+  initializeTransaction,
 }, dispatch)
 
 const mapStateToProps = (state) => ({

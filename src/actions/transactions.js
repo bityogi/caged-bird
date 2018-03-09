@@ -11,6 +11,7 @@ import {
 
 
 import {
+  PENDING,
   CREATING,
   // CREATED,
   // CREATE_ERROR,
@@ -18,6 +19,8 @@ import {
   SAVED,
   // SAVE_ERROR,
 } from 'util/transactionStatus';
+
+import { showNotification } from './notification';
 // temporary code
 const pendingTransactionsPayload = [
   {
@@ -77,6 +80,7 @@ export const pendingTransactions = () => {
     dispatch({
       type: FETCH_START
     });
+    dispatch(showNotification('Getting Pending Transactions'));
 
     return setTimeout(() => {
 
@@ -165,5 +169,28 @@ export const transactionExecute = (id) => {
 
     }, 3000);
 
+  }
+}
+
+
+
+
+export const initializeTransaction = () => {
+  console.log('initializing transaction');
+  return dispatch => {
+    dispatch({
+      type: TRANSACTION_EXECUTION,
+      payload: {
+        status: PENDING
+      }
+    });
+
+    dispatch({
+      type: TRANSACTION_DETAIL,
+      payload: {
+        loading: false,
+        data: {}
+      }
+    });
   }
 }
