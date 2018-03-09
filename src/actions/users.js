@@ -18,13 +18,16 @@ export const login = (credentials) => {
 
     return setTimeout(() => {
       dispatch({
-        type: LOGIN_SUCCESS
+        type: LOGIN_SUCCESS,
+        payload: {
+          token: '1234'
+        }
       });
       dispatch({
         type: SHOW_NOTIFICATION,
         payload: {
           text: 'Users Logged In',
-          type: 'info'
+          type: 'info',
         }
       })
       history.push('/landing');

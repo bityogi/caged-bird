@@ -17,7 +17,7 @@ export default function usersReducer (state = initialState, action) {
       return { ...initialState, loading: true };
 
     case LOGIN_SUCCESS:
-      return { loading: false, ...state };
+      return { loading: false, data: action.payload };
 
     case LOGIN_FAILURE:
       return { loading: false, data: [] };
@@ -25,5 +25,5 @@ export default function usersReducer (state = initialState, action) {
     default:
       return state;
   }
-  
+
 }

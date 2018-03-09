@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
-
+import _ from 'lodash';
 import { withRouter } from 'react-router-dom';
 
 import { logout } from 'actions';
@@ -39,7 +39,15 @@ const styles = {
 class Header extends Component {
 
   navigateHome() {
-    this.props.history.push('/');
+    const { users, history } = this.props;
+    if (_.isEmpty(users.data)) {
+      //There is no token, navigate to '/'
+      history.push('/');
+    } else {
+      //Token present, navigate to landing
+      history.push('/landing');
+    }
+
   }
 
   render() {
