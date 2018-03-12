@@ -6,10 +6,10 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGOUT,
-  SHOW_NOTIFICATION
 } from './types';
 
 import { history } from 'store';
+import { showNotification } from './notification';
 
 export const login = (credentials) => {
   console.log('login with credentials: ', credentials);
@@ -28,13 +28,8 @@ export const login = (credentials) => {
             token: response.data.token
           }
         });
-        dispatch({
-          type: SHOW_NOTIFICATION,
-          payload: {
-            text: 'Users Logged In',
-            type: 'info',
-          }
-        })
+        dispatch(showNotification('Users Logged In', 'info'));
+
         history.push('/landing');
       })
       .catch(error => {
@@ -42,13 +37,8 @@ export const login = (credentials) => {
         dispatch({
           type: LOGIN_FAILURE
         });
-        dispatch({
-          type: SHOW_NOTIFICATION,
-          payload: {
-            text: 'Login Failed',
-            type: 'warning',
-          }
-        })
+        dispatch(showNotification('Login Failed', 'warning'));
+
       });
 
   }
@@ -61,13 +51,7 @@ export const logout = () => {
         type: LOGOUT
     });
 
-    dispatch({
-      type: SHOW_NOTIFICATION,
-      payload: {
-        text: 'Users Logged out',
-        type: 'info'
-      }
-    });
+    dispatch(showNotification('Users Logged out', 'info'));
 
     history.push('/');
   }
