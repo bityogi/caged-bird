@@ -19,7 +19,7 @@ export const login = (credentials) => {
       type: LOGIN
     });
 
-    client.post(`/authenticate/cagebird`, credentials)
+    return client.post(`/authenticate/cagebird`, credentials)
       .then(response => {
         console.log('resonse from authenticate: ', response);
         dispatch({
