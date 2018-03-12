@@ -12,7 +12,7 @@ import {
 const initialState = null
 
 
-export default function transactionDetailReducer (state = initialState, action) {
+export default function reducer (state = initialState, action) {
   switch (action.type) {
     case BROADCAST_STATUS:
       console.log('New Broadcast status - ', action.payload);
