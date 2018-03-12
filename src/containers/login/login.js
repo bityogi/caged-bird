@@ -77,7 +77,8 @@ class LoginUser extends Component {
                     name="username1"
                     component={TextField}
                     floatingLabelText="Operator 1"
-                    />
+                    id="username1"
+                  />
                 </div>
 
                 <div>
@@ -85,7 +86,9 @@ class LoginUser extends Component {
                     name="password1"
                     component={TextField}
                     floatingLabelText="Password"
-                    type="password" />
+                    type="password"
+                    id="password1"
+                  />
                 </div>
 
             </div>
@@ -99,7 +102,9 @@ class LoginUser extends Component {
                   <Field
                     name="username2"
                     component={TextField}
-                    floatingLabelText="Operator 2" />
+                    floatingLabelText="Operator 2"
+                    id="username2"
+                  />
                 </div>
 
                 <div>
@@ -107,7 +112,9 @@ class LoginUser extends Component {
                     name="password2"
                     component={TextField}
                     floatingLabelText="Password"
-                    type="password" />
+                    type="password"
+                    id="password2"
+                   />
                 </div>
             </div>
 

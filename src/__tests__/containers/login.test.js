@@ -1,18 +1,19 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
+import { Provider } from 'react-redux';
 
-import Login from 'containers/login';
+import { Login } from 'containers/login';
+import store from 'store';
 
 describe('Login', () => {
   it('renders correctly', () => {
     const rendered = renderer.create(
-      <Login />
+      <Provider store={store}>
+          <Login />
+      </Provider>
+
     );
     expect(rendered.toJSON()).toMatchSnapshot();
-  });
-
-  it('Calls the login function', () => {
-    expect(2 + 2).toBe(4);
   });
 
 });
