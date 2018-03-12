@@ -1,6 +1,7 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
+import { Thunk } from 'redux-testkit';
 
 import { client } from 'util/axios';
 import * as actions from 'actions';
@@ -17,7 +18,13 @@ describe('User actions', () => {
     mock.restore()
   });
 
-  it('creates LOGIN_SUCCESS after a successful login', () => {
+  const store = mockStore({ users: {
+      loading: false,
+      data: {}
+    }
+  });
+
+  it('creates LOGIN, LOGIN_SUCCESS, SHOW_NOTIFICATION after a successful login', () => {
     const data = {
       token: '1234'
     };
@@ -31,11 +38,7 @@ describe('User actions', () => {
       { type: types.SHOW_NOTIFICATION, payload: { text: 'Users Logged In', type: 'info' }}
     ];
 
-    const store = mockStore({ users: {
-        loading: false,
-        data: {}
-      }
-    });
+
 
     const credentials = {
       username1: 'user1',
@@ -49,7 +52,21 @@ describe('User actions', () => {
     });
   });
 
-  it('knows that 2 and 2 make 4', () => {
-    expect(2 + 2).toBe(4);
+  it('creates LOGOUT, SHOW_NOTIFICATION after a successful logout', async () => {
+    const expectedActions = [
+      { type: types.LOGOUT },
+      { type: types.SHOW_NOTIFICATION, payload: { text: 'Users Logged out', type: 'info' }}
+    ];
+
+    const dispatches = await Thunk(actions.logout).execute();
+
+    expect(dispatches.length).toBe(2);
+    expect(dispatches[0].isPlainObject()).toBe(true);
+    expect(dispatches[0].getAction()).toEqual({ type: types.LOGOUT });
+
+    expect(dispatches[1].isPlainObject()).toBe(true);
+    expect(dispatches[1].getAction()).toEqual({ type: types.SHOW_NOTIFICATION, payload: { text: 'Users Logged out', type: 'info' }});
+
+
   });
 });
