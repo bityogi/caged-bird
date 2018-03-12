@@ -1,4 +1,5 @@
-import axios from 'axios';
+
+import { client } from 'util/axios';
 
 import {
   LOGIN,
@@ -18,25 +19,13 @@ export const login = (credentials) => {
       type: LOGIN
     });
 
-    return setTimeout(() => {
-      // temporary code
-      const validUsers = ['user1', 'user2']
-      if (!validUsers.includes(credentials.username1)) {
-        dispatch({
-          type: LOGIN_FAILURE
-        });
-        dispatch({
-          type: SHOW_NOTIFICATION,
-          payload: {
-            text: 'Login Failed',
-            type: 'warning',
-          }
-        })
-      } else {
+    client.post(`/authenticate/cagebird`, credentials)
+      .then(response => {
+        console.log('resonse from authenticate: ', response);
         dispatch({
           type: LOGIN_SUCCESS,
           payload: {
-            token: '1234'
+            token: response.data.token
           }
         });
         dispatch({
@@ -47,9 +36,21 @@ export const login = (credentials) => {
           }
         })
         history.push('/landing');
-      }
+      })
+      .catch(error => {
+        console.log('Error with authenticate: ', error);
+        dispatch({
+          type: LOGIN_FAILURE
+        });
+        dispatch({
+          type: SHOW_NOTIFICATION,
+          payload: {
+            text: 'Login Failed',
+            type: 'warning',
+          }
+        })
+      });
 
-    }, 3000)
   }
 }
 

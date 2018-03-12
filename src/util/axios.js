@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import store from 'store';
 
-const client = () => {
+const authClient = () => {
   const defaultOptions = {
     baseURL: process.env.REACT_APP_BLUEBIRD_API,
     headers: {
@@ -21,4 +21,14 @@ const client = () => {
   return instance;
 };
 
-export default client;
+
+let client = axios.create({
+  baseURL: process.env.REACT_APP_BLUEBIRD_API
+});
+
+client.defaults.headers.common['Content-Type'] = 'application/json';
+
+export {
+  authClient,
+  client
+}
