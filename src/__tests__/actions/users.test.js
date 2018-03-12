@@ -24,20 +24,13 @@ describe('User actions', () => {
     }
   });
 
-  it('creates LOGIN, LOGIN_SUCCESS, SHOW_NOTIFICATION after a successful login', () => {
+  it('creates LOGIN, LOGIN_SUCCESS, SHOW_NOTIFICATION after a successful login', async () => {
     const data = {
       token: '1234'
     };
     mock
       .onPost('/authenticate/cagebird')
       .reply(200, data);
-
-    const expectedActions = [
-      { type: types.LOGIN },
-      { type: types.LOGIN_SUCCESS, payload: { token: '1234' } },
-      { type: types.SHOW_NOTIFICATION, payload: { text: 'Users Logged In', type: 'info' }}
-    ];
-
 
 
     const credentials = {
@@ -47,9 +40,19 @@ describe('User actions', () => {
       password2: 'pass2'
     };
 
-    return store.dispatch(actions.login(credentials)).then(() => {
-      expect(store.getActions()).toEqual(expectedActions)
-    });
+    const dispatches = await Thunk(actions.login).execute();
+
+    expect(dispatches.length).toBe(3);
+    expect(dispatches[0].isPlainObject()).toBe(true);
+    expect(dispatches[0].getAction()).toEqual({ type: types.LOGIN });
+
+    expect(dispatches[1].isPlainObject()).toBe(true);
+    expect(dispatches[1].getAction()).toEqual({ type: types.LOGIN_SUCCESS, payload: { token: '1234' } });
+
+    expect(dispatches[2].isPlainObject()).toBe(true);
+    expect(dispatches[2].getAction()).toEqual({ type: types.SHOW_NOTIFICATION, payload: { text: 'Users Logged In', type: 'info' }});
+
+
   });
 
   it('creates LOGOUT, SHOW_NOTIFICATION after a successful logout', async () => {
