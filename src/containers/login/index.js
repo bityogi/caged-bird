@@ -91,6 +91,4 @@ const mapStateToProps = (state) => ({
   users: state.users
 })
 
-export const Login = connect(mapStateToProps, mapDispatchToProps)(LoginPage);
-
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(LoginPage));
