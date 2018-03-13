@@ -77,7 +77,7 @@ export default ({ detail }) => {
       />
       <ListItem
         primaryText="Gen Time"
-        secondaryText={detail.data.genTime}
+        secondaryText={detail.data.generatedOn}
         innerDivStyle={styles.listItems}
         leftIcon={<FontIcon className="material-icons" style={styles.icon}>access_time</FontIcon>}
       />

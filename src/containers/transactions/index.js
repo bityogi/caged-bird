@@ -103,7 +103,6 @@ class Transactions extends Component {
       );
     } else {
       return _.map(transactions, (t, i) => {
-        const code = 'BTC';
         return (
           <TableRow
             hoverable={true}
@@ -112,10 +111,10 @@ class Transactions extends Component {
             style={{ textAlign: 'center' }}
           >
             <TableRowColumn style={{ width: '20%', ...styles.rowColumn }}>{t.client}</TableRowColumn>
-            <TableRowColumn style={{ width: '20%', ...styles.rowColumn }}>{t.coin}</TableRowColumn>
+            <TableRowColumn style={{ width: '20%', ...styles.rowColumn }}>{t.coinDescription}</TableRowColumn>
             <TableRowColumn style={{ width: '15%', ...styles.rowColumn }}>{t.account}</TableRowColumn>
-            <TableRowColumn style={{ width: '25%', ...styles.rowColumn }}>{`${code} ${Number.parseFloat(t.amount).toFixed(8)}`}</TableRowColumn>
-            <TableRowColumn style={{ width: '20%', ...styles.rowColumn }}>{formatDate(t.genTime)}</TableRowColumn>
+            <TableRowColumn style={{ width: '25%', ...styles.rowColumn }}>{`${t.ticker} ${Number.parseFloat(t.amount).toFixed(8)}`}</TableRowColumn>
+            <TableRowColumn style={{ width: '20%', ...styles.rowColumn }}>{formatDate(t.generatedOn)}</TableRowColumn>
           </TableRow>
         )
       })
