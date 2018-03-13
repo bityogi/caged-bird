@@ -6,7 +6,7 @@ import { showNotification } from './notification';
 
 export const handleError = (error, isFetch = false) => {
   return dispatch => {
-    if (error.status === 401) {
+    if (error && error.status === 401) {
       //Unauthorized. Clear token. Send alert with redirect-to-home action
       const key = 'LOG_OUT' //TODO: import this from alertActions instead of hard-coding
       const message = 'Authorization token has expired. Please log in again.'

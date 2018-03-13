@@ -25,7 +25,7 @@ export const login = (credentials) => {
         dispatch({
           type: LOGIN_SUCCESS,
           payload: {
-            loaing: false,
+            loading: false,
             token: response.data.token
           }
         });

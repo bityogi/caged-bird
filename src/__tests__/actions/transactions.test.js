@@ -17,9 +17,27 @@ describe('Transactions actions', () => {
   });
 
   it('creates the right actions for pendingTransactions', async () => {
+    const data = [{
+      "transactionId":1,
+      "clientAccount":"Digital Asset Custody Company",
+      "amount":0.0010100000,
+      "fee":null,
+      "generatedOn":"2018-01-23T16:47:00",
+      "memo":"DACC cold to CB hot 1",
+      "coinDescription":"Ethereum",
+      "ticker":"ETH",
+      "amountField":"Transaction.Amount",
+      "amountCalcMethodId":1,
+      "amountCalcMethodDesc":"Amount + Ticker",
+    }];
+    
+    mock
+      .onGet('/pendingTransactions/')
+      .reply(200, data);
+
     const dispatches = await Thunk(actions.pendingTransactions).execute();
 
-    expect(dispatches.length).toBe(2);
+    expect(dispatches.length).toBe(3);
 
   });
 

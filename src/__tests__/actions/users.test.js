@@ -47,7 +47,7 @@ describe('User actions', () => {
     expect(dispatches[0].getAction()).toEqual({ type: types.LOGIN });
 
     expect(dispatches[1].isPlainObject()).toBe(true);
-    expect(dispatches[1].getAction()).toEqual({ type: types.LOGIN_SUCCESS, payload: { token: '1234' } });
+    expect(dispatches[1].getAction()).toEqual({ type: types.LOGIN_SUCCESS, payload: { loading: false, token: '1234' } });
 
     expect(dispatches[2].isPlainObject()).toBe(true);
     expect(dispatches[2].getAction()).toEqual({ type: types.SHOW_NOTIFICATION, payload: { text: 'Users Logged In', type: 'info' }});
