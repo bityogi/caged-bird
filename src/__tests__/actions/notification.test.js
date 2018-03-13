@@ -1,9 +1,8 @@
 import * as actions from 'actions';
 import * as types from 'actions/types';
 
-import Header from 'components/header';
 
-describe('Notification', () => {
+describe('Notification action', () => {
   it('creates SHOW_NOTIFICATION action', () => {
     const notification = 'Showing Notification';
 
