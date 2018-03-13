@@ -12,7 +12,7 @@ const authClient = () => {
 
   let instance = axios.create(defaultOptions);
 
-  instance.interceptors.requeset.use((config) => {
+  instance.interceptors.request.use((config) => {
     const token = store.getState().token;
     config.headers.Authorization = token ? `Bearer ${token}` : '';
     return config;
