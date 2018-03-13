@@ -23,6 +23,8 @@ import {
 } from 'util/transactionStatus';
 
 import { showNotification } from './notification';
+import { handleError } from './util';
+
 // // temporary code
 // const pendingTransactionsPayload = [
 //   {
@@ -98,11 +100,7 @@ export const pendingTransactions = () => {
         });
       })
       .catch(error => {
-        console.log(error.response);
-        console.error('Error status code: ', error.status);
-        dispatch({
-          type: FETCH_ERROR
-        });
+        dispatch(handleError(error.response, true));
       });
 
   }

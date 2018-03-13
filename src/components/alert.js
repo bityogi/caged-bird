@@ -7,8 +7,14 @@ import _ from 'lodash';
 import { actions as alertActions } from 'util/alertActions';
 
 class AlertDialog extends Component {
-  state = {
-    open: false
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false
+    };
+
+    this.handleClose = this.handleClose.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
