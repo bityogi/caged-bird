@@ -13,7 +13,6 @@ const drivelist = remote.require('drivelist');
 
 export const getUSBData = () => {
   var deferred = Q.defer();
-  console.log('inside getUSBData!');
   try {
 
     drivelist.list((error, drives) => {
@@ -24,18 +23,30 @@ export const getUSBData = () => {
       let usbFound = false;
       _.map(drives, d => {
         if (d.isUSB) {
-          const fileName = process.env.REACT_APP_USB_FILENAME;
-          const filePath = path.join(d.mountpoints[0].path.toString(), fileName);
-
-          var content = fs.readFileSync(filePath, 'utf-8');
-
           usbFound = true;
-          deferred.resolve(content.toString());
+          const mountPath = d.mountpoints[0].path.toString();
+          const infoFile = process.env.REACT_APP_READ_TX_FILENAME;
+          const infoFilePath = path.join(mountPath, infoFile);
+
+          var txInfo = fs.readFileSync(infoFilePath, 'utf-8');
+
+          const dataFile = process.env.REACT_APP_READ_SIGNED_FILENAME;
+          const dataFilePath = path.join(mountPath, dataFile);
+
+          var data = fs.readFileSync(dataFilePath, 'utf-8');
+          const txInfo = JSON.parse(txInfo.toString());
+
+          const signedTxPayload = {
+            ...txInfo,
+            payload: data.toString()
+          };
+
+          deferred.resolve(signedTxPayload);
         }
       });
 
       if (!usbFound) {
-        deferred.reject({ message: 'No USB Found' });
+        deferred.reject('No USB Found');
       }
 
     })
@@ -48,8 +59,34 @@ export const getUSBData = () => {
 
 
 export const writeToUSB = (data) => {
-  // const fileName = constants.transactionFileJson;
+  var deferred = Q.defer();
 
-  //Write file to USB.
+  try {
+    drivelist.list((error, drives) => {
+      if (error) {
+        console.error('Error reading drive list: ', error);
+        deferred.reject(error);
+      }
+      let usbFound = false;
+      _.map(drives, d => {
+        if (d.isUSB) {
+          usbFound = true;
+          const mountPath = d.mountpoints[0].path.toString();
+          const fileName = process.env.REACT_APP_WRITE_FILENAME;
+          const filePath = path.join(mountPath, fileName);
 
+          fs.writeFileSync(filePath, data);
+          deferred.resolve();
+        }
+      });
+      if (!usbFound) {
+        deferred.reject('No USB Found');
+      }
+    });
+  } catch (e) {
+    console.log(e);
+    deferred.reject(e);
+  }
+
+  return deferred.promise;
 }
