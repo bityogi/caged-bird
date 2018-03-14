@@ -26,6 +26,6 @@ describe('Broadcast actions', () => {
   it('creates the right actions for broadcastTransaction', async () => {
     const dispatches = await Thunk(actions.broadcastTransaction).execute();
 
-    expect(dispatches.length).toBe(2);
+    expect(dispatches.length).toBe(3);
   });
 })

@@ -30,7 +30,7 @@ describe('Transactions actions', () => {
       "amountCalcMethodId":1,
       "amountCalcMethodDesc":"Amount + Ticker",
     }];
-    
+
     mock
       .onGet('/pendingTransactions/')
       .reply(200, data);
@@ -44,13 +44,13 @@ describe('Transactions actions', () => {
   it('creates the right actions for transactionDetail', async () => {
     const dispatches = await Thunk(actions.transactionDetail).execute();
 
-    expect(dispatches.length).toBe(2);
+    expect(dispatches.length).toBe(3);
   });
 
   it('creates the right actions for transactionExecute', async () => {
     const dispatches = await Thunk(actions.transactionExecute).execute();
 
-    expect(dispatches.length).toBe(2);
+    expect(dispatches.length).toBe(3);
   });
 
   it('creates the right actions for initializeTransaction', async () => {
