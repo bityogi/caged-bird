@@ -5,11 +5,8 @@ import { getUSBData } from 'util/usb';
 import {
   BROADCAST_DETAIL,
   BROADCAST_STATUS,
-
   FETCH_START,
   FETCH_END,
-  // FETCH_ERROR,
-  // FETCH_CANCEL,
 } from './types';
 
 import {
@@ -22,23 +19,6 @@ import {
 
 import { showNotification } from './notification';
 import { handleError } from './util';
-// temporary code
-
-const broadcastTransactionPayload = {
-  id: 26,
-  client: 'Conger Inv',
-  coin: 'Bitcoin',
-  account: 'Offshore',
-  coldWallet: 'Wallet1',
-  hotWallet: '123hhsdfsfasfd65',
-  amount: 231.66,
-  fee: 0.0123,
-  memo: 'This is a memo for the transaction',
-  genTime: '3/15/2018'
-}
-
-//
-
 
 
 export const signedTransaction = () => {
@@ -56,7 +36,7 @@ export const signedTransaction = () => {
 
     return getUSBData()
       .then(data => {
-        console.log('resonse from getUSBData: ', data);
+        console.log('response from getUSBData: ', data);
 
         dispatch({
             type: BROADCAST_DETAIL,
@@ -83,9 +63,9 @@ export const signedTransaction = () => {
   }
 }
 
-export const broadcastTransaction = (id) => {
+export const broadcastTransaction = () => {
   console.log('broadcast transaction');
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch({
       type: FETCH_START
     });
@@ -95,12 +75,24 @@ export const broadcastTransaction = (id) => {
       payload: SUBMITTING
     });
 
-    return authClient().patch(`/transactions/${id}/broadcast`)
+    const { broadcast } = getState().signed
+
+    const id = broadcast.data.transactionId;
+    const data = {
+      transactionId : id,
+      payload: broadcast.data.payload
+    };
+
+    return authClient().patch(`/transactions/${id}/broadcast`, data)
       .then((response) => {
         console.log('response from broadcast transaction: ', response);
         dispatch({
           type: BROADCAST_STATUS,
           payload:  SUBMITTED
+        });
+
+        dispatch({
+          type: FETCH_END
         });
       })
       .catch(error => {
