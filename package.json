@@ -3,9 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "Central": "https://github.com/10thFloorSoft/Central.git",
     "axios": "^0.18.0",
+    "drivelist": "^6.1.1",
+    "electron": "^1.8.3",
     "lodash": "^4.17.5",
     "material-ui": "^0.20.0",
+    "q": "^1.5.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.7",

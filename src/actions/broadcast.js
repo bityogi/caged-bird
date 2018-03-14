@@ -1,4 +1,6 @@
+
 import { authClient } from 'util/axios';
+import { getUSBData } from 'util/usb';
 
 import {
   BROADCAST_DETAIL,
@@ -37,8 +39,10 @@ const broadcastTransactionPayload = {
 
 //
 
+
+
 export const signedTransaction = () => {
-  console.log('get signed transactions');
+  console.log('get signed transaction (from USB)');
 
   return dispatch => {
     dispatch({
@@ -50,26 +54,32 @@ export const signedTransaction = () => {
       payload: RETRIEVING
     });
 
-    // Stub in code to retrieve signed tx payload from USB
-    return setTimeout(() => {
-      dispatch({
-        type: BROADCAST_DETAIL,
-        payload: {
-          loading: false,
-          data: broadcastTransactionPayload
-        }
+    return getUSBData()
+      .then(data => {
+        console.log('resonse from getUSBData: ', data);
+
+        dispatch({
+            type: BROADCAST_DETAIL,
+            payload: {
+              loading: false,
+              data: data
+            }
+          });
+
+          dispatch({
+            type: BROADCAST_STATUS,
+            payload: RETRIEVED
+          });
+
+          dispatch({
+              type: FETCH_END
+          });
+      })
+      .catch(error => {
+        console.error('Error retrieving USB data: ', error);
+        dispatch(handleError(error, true));
       });
 
-      dispatch({
-        type: BROADCAST_STATUS,
-        payload: RETRIEVED
-      });
-
-      dispatch({
-        type: FETCH_END
-      });
-
-    }, 3000)
   }
 }
 
@@ -96,6 +106,6 @@ export const broadcastTransaction = (id) => {
       .catch(error => {
         dispatch(handleError(error.response, true));
       });
-    
+
   }
 }
