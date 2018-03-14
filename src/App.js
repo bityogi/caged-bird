@@ -8,7 +8,7 @@ import autoprefixer from 'material-ui/utils/autoprefixer';
 import CircularProgress from 'material-ui/CircularProgress';
 import withWidth from 'material-ui/utils/withWidth';
 
-import { Header, Notification } from 'components';
+import { Header, Notification, Alert } from 'components';
 import Routes from './routes';
 import theme from './theme';
 
@@ -93,6 +93,7 @@ class App extends Component {
 
             </div>
 
+            <Alert />
             <Notification />
             {isLoading && (
                <CircularProgress

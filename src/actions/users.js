@@ -1,13 +1,15 @@
 
+import { client } from 'util/axios';
+
 import {
   LOGIN,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGOUT,
-  SHOW_NOTIFICATION
 } from './types';
 
 import { history } from 'store';
+import { showNotification } from './notification';
 
 export const login = (credentials) => {
   console.log('login with credentials: ', credentials);
@@ -17,38 +19,29 @@ export const login = (credentials) => {
       type: LOGIN
     });
 
-    return setTimeout(() => {
-      // temporary code
-      const validUsers = ['user1', 'user2']
-      if (!validUsers.includes(credentials.username1)) {
-        dispatch({
-          type: LOGIN_FAILURE
-        });
-        dispatch({
-          type: SHOW_NOTIFICATION,
-          payload: {
-            text: 'Login Failed',
-            type: 'warning',
-          }
-        })
-      } else {
+    return client.post(`/authenticate/cagebird`, credentials)
+      .then(response => {
+        console.log('resonse from authenticate: ', response);
         dispatch({
           type: LOGIN_SUCCESS,
           payload: {
-            token: '1234'
+            loading: false,
+            token: response.data.token
           }
         });
-        dispatch({
-          type: SHOW_NOTIFICATION,
-          payload: {
-            text: 'Users Logged In',
-            type: 'info',
-          }
-        })
-        history.push('/landing');
-      }
+        dispatch(showNotification('Users Logged In', 'info'));
 
-    }, 3000)
+        history.push('/landing');
+      })
+      .catch(error => {
+        console.log('Error with authenticate: ', error);
+        dispatch({
+          type: LOGIN_FAILURE
+        });
+        dispatch(showNotification('Login Failed', 'warning'));
+
+      });
+
   }
 }
 
@@ -59,13 +52,7 @@ export const logout = () => {
         type: LOGOUT
     });
 
-    dispatch({
-      type: SHOW_NOTIFICATION,
-      payload: {
-        text: 'Users Logged out',
-        type: 'info'
-      }
-    });
+    dispatch(showNotification('Users Logged out', 'info'));
 
     history.push('/');
   }

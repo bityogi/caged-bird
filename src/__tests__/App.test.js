@@ -3,15 +3,15 @@ import renderer from 'react-test-renderer';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 
-import Login from 'containers/login';
+import App from 'App';
 import store from 'store';
 
-describe('Login', () => {
+describe('App', () => {
   it('renders correctly', () => {
     const rendered = renderer.create(
       <Provider store={store}>
         <MemoryRouter initialEntries={['/', '/landing']}>
-          <Login />
+          <App />
         </MemoryRouter>
 
       </Provider>

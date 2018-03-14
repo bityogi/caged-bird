@@ -16,8 +16,6 @@ import Paper from 'material-ui/Paper';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import CircularProgress from 'material-ui/CircularProgress';
-// import { List, ListItem } from 'material-ui/List';
-
 
 
 import TransactionDetail from 'components/transactionDetail';
@@ -87,8 +85,8 @@ class Transactions extends Component {
     const selected = this.props.transactions[index];
 
     console.log('selected transaction: ', selected);
-    this.props.transactionDetail(selected.id);
-    this.setState({ open: true, selectedTransaction: selected.id });
+    this.props.transactionDetail(selected.transactionId);
+    this.setState({ open: true, selectedTransaction: selected.transactionId });
 
   }
 
@@ -103,7 +101,6 @@ class Transactions extends Component {
       );
     } else {
       return _.map(transactions, (t, i) => {
-        const code = 'BTC';
         return (
           <TableRow
             hoverable={true}
@@ -111,11 +108,11 @@ class Transactions extends Component {
             value={t}
             style={{ textAlign: 'center' }}
           >
-            <TableRowColumn style={{ width: '20%', ...styles.rowColumn }}>{t.client}</TableRowColumn>
-            <TableRowColumn style={{ width: '20%', ...styles.rowColumn }}>{t.coin}</TableRowColumn>
+            <TableRowColumn style={{ width: '20%', ...styles.rowColumn }}>{t.clientAccount}</TableRowColumn>
+            <TableRowColumn style={{ width: '20%', ...styles.rowColumn }}>{t.coinDescription}</TableRowColumn>
             <TableRowColumn style={{ width: '15%', ...styles.rowColumn }}>{t.account}</TableRowColumn>
-            <TableRowColumn style={{ width: '25%', ...styles.rowColumn }}>{`${code} ${Number.parseFloat(t.amount).toFixed(8)}`}</TableRowColumn>
-            <TableRowColumn style={{ width: '20%', ...styles.rowColumn }}>{formatDate(t.genTime)}</TableRowColumn>
+            <TableRowColumn style={{ width: '25%', ...styles.rowColumn }}>{`${t.ticker} ${Number.parseFloat(t.amount).toFixed(8)}`}</TableRowColumn>
+            <TableRowColumn style={{ width: '20%', ...styles.rowColumn }}>{formatDate(t.generatedOn)}</TableRowColumn>
           </TableRow>
         )
       })

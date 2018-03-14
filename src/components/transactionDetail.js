@@ -23,19 +23,19 @@ export default ({ detail }) => {
     <List>
       <ListItem
         primaryText="Transaction ID"
-        secondaryText={detail.data.id}
+        secondaryText={detail.data.transactionId}
         innerDivStyle={styles.listItems}
         leftIcon={<ActionInfo style={styles.icon} color={primary1Color} />}
       />
       <ListItem
         primaryText="Client"
-        secondaryText={detail.data.client}
+        secondaryText={detail.data.clientAccount}
         innerDivStyle={styles.listItems}
         leftIcon={<FontIcon className="material-icons" style={styles.icon}>person_pin</FontIcon>}
       />
       <ListItem
         primaryText="Coin"
-        secondaryText={detail.data.coin}
+        secondaryText={detail.data.coinDescription}
         innerDivStyle={styles.listItems}
         leftIcon={<FontIcon className="material-icons" style={styles.icon}>album</FontIcon>}
       />
@@ -77,7 +77,7 @@ export default ({ detail }) => {
       />
       <ListItem
         primaryText="Gen Time"
-        secondaryText={detail.data.genTime}
+        secondaryText={detail.data.generatedOn}
         innerDivStyle={styles.listItems}
         leftIcon={<FontIcon className="material-icons" style={styles.icon}>access_time</FontIcon>}
       />

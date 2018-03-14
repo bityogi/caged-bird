@@ -1,3 +1,7 @@
+
+import { authClient } from 'util/axios';
+import { getUSBData } from 'util/usb';
+
 import {
   BROADCAST_DETAIL,
   BROADCAST_STATUS,
@@ -16,7 +20,8 @@ import {
   SUBMITTED,
 } from 'util/broadcastStatus';
 
-
+import { showNotification } from './notification';
+import { handleError } from './util';
 // temporary code
 
 const broadcastTransactionPayload = {
@@ -34,8 +39,10 @@ const broadcastTransactionPayload = {
 
 //
 
+
+
 export const signedTransaction = () => {
-  console.log('get signed transactions');
+  console.log('get signed transaction (from USB)');
 
   return dispatch => {
     dispatch({
@@ -47,29 +54,36 @@ export const signedTransaction = () => {
       payload: RETRIEVING
     });
 
-    return setTimeout(() => {
-      dispatch({
-        type: BROADCAST_DETAIL,
-        payload: {
-          loading: false,
-          data: broadcastTransactionPayload
-        }
+    return getUSBData()
+      .then(data => {
+        console.log('resonse from getUSBData: ', data);
+
+        dispatch({
+            type: BROADCAST_DETAIL,
+            payload: {
+              loading: false,
+              data: data
+            }
+          });
+
+          dispatch({
+            type: BROADCAST_STATUS,
+            payload: RETRIEVED
+          });
+
+          dispatch({
+              type: FETCH_END
+          });
+      })
+      .catch(error => {
+        console.error('Error retrieving USB data: ', error);
+        dispatch(handleError(error, true));
       });
 
-      dispatch({
-        type: BROADCAST_STATUS,
-        payload: RETRIEVED
-      });
-
-      dispatch({
-        type: FETCH_END
-      });
-
-    }, 3000)
   }
 }
 
-export const broadcastTransaction = () => {
+export const broadcastTransaction = (id) => {
   console.log('broadcast transaction');
   return dispatch => {
     dispatch({
@@ -81,12 +95,17 @@ export const broadcastTransaction = () => {
       payload: SUBMITTING
     });
 
-    return setTimeout(() => {
-      dispatch({
-        type: BROADCAST_STATUS,
-        payload:  SUBMITTED
+    return authClient().patch(`/transactions/${id}/broadcast`)
+      .then((response) => {
+        console.log('response from broadcast transaction: ', response);
+        dispatch({
+          type: BROADCAST_STATUS,
+          payload:  SUBMITTED
+        });
+      })
+      .catch(error => {
+        dispatch(handleError(error.response, true));
       });
 
-    }, 3000)
   }
 }

@@ -1,16 +1,22 @@
 import {
-  BROADCAST_DETAIL
+  ALERT,
+  CLEAR_ALERT
 } from 'actions/types';
 
 const initialState = {
-  loading: false,
-  data: {}
+  key: '',
+  message: ''
 }
+
 
 export default function reducer (state = initialState, action) {
   switch (action.type) {
-    case BROADCAST_DETAIL:
+    case ALERT:
+      console.log('New ALERT message - ', action.payload);
       return action.payload;
+
+    case CLEAR_ALERT:
+      return initialState;
 
     default:
       return state;

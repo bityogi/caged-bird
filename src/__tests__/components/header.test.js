@@ -1,10 +1,25 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import renderer from 'react-test-renderer';
+import { Provider } from 'react-redux';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import { MemoryRouter } from 'react-router';
 
-import Header from 'components/header';
+import HeaderComponent from 'components/header';
+import store from 'store';
 
-describe('Header', () => {
-  it('displays title', () => {
-    expect(2 + 2).toBe(4);
-  })
-})
+describe('Header Component', () => {
+  it('renders correctly', () => {
+    const rendered = renderer.create(
+      <Provider store={store}>
+        <MuiThemeProvider>
+          <MemoryRouter initialEntries={['/', '/landing']}>
+            <HeaderComponent />
+          </MemoryRouter>
+        </MuiThemeProvider>
+      </Provider>
+
+    );
+    expect(rendered.toJSON()).toMatchSnapshot();
+  });
+
+});

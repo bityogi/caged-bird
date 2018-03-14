@@ -1,19 +1,18 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
-import Login from 'containers/login';
+import Transactions from 'containers/transactions';
 import store from 'store';
 
 describe('Login', () => {
   it('renders correctly', () => {
     const rendered = renderer.create(
       <Provider store={store}>
-        <MemoryRouter initialEntries={['/', '/landing']}>
-          <Login />
-        </MemoryRouter>
-
+        <MuiThemeProvider>
+          <Transactions />
+        </MuiThemeProvider>
       </Provider>
 
     );
