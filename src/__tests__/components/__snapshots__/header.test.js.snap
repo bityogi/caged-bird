@@ -1,0 +1,102 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header Component renders correctly 1`] = `
+<div>
+  <div
+    className={undefined}
+    style={
+      Object {
+        "WebkitTapHighlightColor": "rgba(0,0,0,0)",
+        "backgroundColor": "#00838f",
+        "boxSizing": "border-box",
+        "display": "flex",
+        "height": 56,
+        "justifyContent": "space-between",
+        "muiPrepared": true,
+        "padding": "0px 24px",
+      }
+    }
+  >
+    <div
+      className={undefined}
+      style={
+        Object {
+          "alignItems": "center",
+          "display": "flex",
+          "justifyContent": "space-between",
+          "marginLeft": -24,
+          "marginRight": undefined,
+          "muiPrepared": true,
+          "position": "relative",
+        }
+      }
+    >
+      <span
+        onClick={[Function]}
+        style={
+          Object {
+            "color": "rgba(0, 0, 0, 0.87)",
+            "cursor": "pointer",
+            "fontFamily": "Roboto, sans-serif",
+            "fontSize": "1.8em",
+            "lineHeight": "56px",
+            "marginLeft": 25,
+            "muiPrepared": true,
+            "overflow": "hidden",
+            "paddingRight": 16,
+            "position": "relative",
+            "textOverflow": "ellipsis",
+            "whiteSpace": "nowrap",
+          }
+        }
+      >
+        Caged Bird
+      </span>
+      <span
+        className={undefined}
+        style={
+          Object {
+            "backgroundColor": "rgba(0, 0, 0, 0.175)",
+            "color": "rgba(0, 0, 0, 0.4)",
+            "display": "block",
+            "height": 32,
+            "lineHeight": "56px",
+            "margin": 20,
+            "marginLeft": 24,
+            "muiPrepared": true,
+            "width": "2px",
+          }
+        }
+      />
+    </div>
+    <div
+      className={undefined}
+      style={
+        Object {
+          "alignItems": "center",
+          "display": "flex",
+          "justifyContent": "space-between",
+          "marginLeft": undefined,
+          "marginRight": undefined,
+          "muiPrepared": true,
+          "position": "relative",
+        }
+      }
+    >
+      <img
+        alt="Caged-Bird"
+        height={48}
+        src="LOGO_WHITE.png"
+        style={
+          Object {
+            "marginBottom": 3,
+            "marginRight": 50,
+            "marginTop": 3,
+          }
+        }
+        width={120}
+      />
+    </div>
+  </div>
+</div>
+`;

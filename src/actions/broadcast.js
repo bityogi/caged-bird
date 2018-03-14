@@ -1,3 +1,5 @@
+import { authClient } from 'util/axios';
+
 import {
   BROADCAST_DETAIL,
   BROADCAST_STATUS,
@@ -16,7 +18,8 @@ import {
   SUBMITTED,
 } from 'util/broadcastStatus';
 
-
+import { showNotification } from './notification';
+import { handleError } from './util';
 // temporary code
 
 const broadcastTransactionPayload = {
@@ -47,6 +50,7 @@ export const signedTransaction = () => {
       payload: RETRIEVING
     });
 
+    // Stub in code to retrieve signed tx payload from USB
     return setTimeout(() => {
       dispatch({
         type: BROADCAST_DETAIL,
@@ -69,7 +73,7 @@ export const signedTransaction = () => {
   }
 }
 
-export const broadcastTransaction = () => {
+export const broadcastTransaction = (id) => {
   console.log('broadcast transaction');
   return dispatch => {
     dispatch({
@@ -81,12 +85,17 @@ export const broadcastTransaction = () => {
       payload: SUBMITTING
     });
 
-    return setTimeout(() => {
-      dispatch({
-        type: BROADCAST_STATUS,
-        payload:  SUBMITTED
+    return authClient().patch(`/transactions/${id}/broadcast`)
+      .then((response) => {
+        console.log('response from broadcast transaction: ', response);
+        dispatch({
+          type: BROADCAST_STATUS,
+          payload:  SUBMITTED
+        });
+      })
+      .catch(error => {
+        dispatch(handleError(error.response, true));
       });
-
-    }, 3000)
+    
   }
 }

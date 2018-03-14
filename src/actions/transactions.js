@@ -25,41 +25,7 @@ import {
 import { showNotification } from './notification';
 import { handleError } from './util';
 
-// // temporary code
-// const pendingTransactionsPayload = [
-//   {
-//     id: '1234',
-//     client: 'Conger Inv',
-//     coin: 'Bitcoin',
-//     account: 'OffShore',
-//     amount: 231.66,
-//     genTime: '2018-03-07T09:18:26-05:00'
-//   },
-//   {
-//     id: '1235',
-//     client: 'Conger Inv',
-//     coin: 'Bitcoin',
-//     account: 'OffShore',
-//     amount: 1234.60,
-//     genTime: '2018-03-07T09:18:26-05:00'
-//   },
-//   {
-//     id: '1236',
-//     client: 'DACC Advisors',
-//     coin: 'Litecoin - ugh',
-//     account: 'OffShore',
-//     amount: 56.22,
-//     genTime: '2018-03-07T09:18:26-05:00'
-//   },
-//   {
-//     id: '1237',
-//     client: 'Swaleela',
-//     coin: 'Ethereum - ugh',
-//     account: 'Western',
-//     amount: 4531.99,
-//     genTime: '2018-03-07T09:18:26-05:00'
-//   },
-// ];
+// temporary code
 
 const transactionDetailPayload = {
   id: 1234,
@@ -86,7 +52,7 @@ export const pendingTransactions = () => {
     });
     dispatch(showNotification('Getting Pending Transactions'));
 
-    return authClient().get('/transactions')
+    return authClient().get('/pendingTransactions')
       .then(response => {
         console.log('response for pendingTransactions: ', response.data);
 
@@ -122,19 +88,21 @@ export const transactionDetail = (id) => {
       }
     })
 
-    return setTimeout(() => {
-      dispatch({
-        type: TRANSACTION_DETAIL,
-        payload: {
-          loading: false,
-          data: transactionDetailPayload
-        }
+    return authClient().get(`transactions/${id}`)
+      .then(response => {
+        console.log('response from transactionDetail: ', response);
+        dispatch({
+          type: TRANSACTION_DETAIL,
+          payload: {
+            loading: false,
+            data: response.data
+          }
+        });
       })
-      dispatch({
-        type: FETCH_END
+      .catch(error => {
+        dispatch(handleError(error.response, true));
       });
 
-    }, 3000)
   }
 }
 
@@ -153,35 +121,40 @@ export const transactionExecute = (id) => {
       }
     });
 
-    return setTimeout(() => {
-      dispatch({
-        type: TRANSACTION_EXECUTION,
-        payload: {
-          status: SAVING
-        }
-      });
-
-
-      return setTimeout(() => {
+    return authClient().patch(`transactions/${id}/unsigned`, {})
+      .then(response => {
+        console.log('response from transaction-execution: ', response);
 
         dispatch({
           type: TRANSACTION_EXECUTION,
           payload: {
-            status: SAVED
+            status: SAVING
           }
         });
-        dispatch({
-          type: FETCH_END
-        });
+        //Make a call to save transaction on USB
 
-      }, 3000);
+        return setTimeout(() => {
 
-    }, 3000);
+          dispatch({
+            type: TRANSACTION_EXECUTION,
+            payload: {
+              status: SAVED
+            }
+          });
+          dispatch({
+            type: FETCH_END
+          });
+
+        }, 3000);
+
+      })
+      .catch(error => {
+        dispatch(handleError(error.response, true));
+      });
+
 
   }
 }
-
-
 
 
 export const initializeTransaction = () => {
