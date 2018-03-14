@@ -28,6 +28,7 @@
     "dev": "nf start"
   },
   "devDependencies": {
+    "electron": "^1.8.3",
     "electron-prebuilt": "^1.4.13",
     "enzyme": "^3.3.0",
     "foreman": "^2.0.0",
