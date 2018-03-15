@@ -2,7 +2,8 @@ import Q from 'q';
 import _ from 'lodash';
 import path from 'path';
 
-const { remote } = window.require('electron');
+const electron = window.require('electron');
+const remote = electron.remote;
 const fs = remote.require('fs');
 const drivelist = remote.require('drivelist');
 
