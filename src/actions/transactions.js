@@ -1,4 +1,5 @@
 import { authClient } from 'util/axios';
+import { writeToUSB } from 'util/usb';
 
 import {
   PENDING_TRANSACTIONS,
@@ -74,6 +75,11 @@ export const transactionDetail = (id) => {
     return authClient().get(`transactions/${id}`)
       .then(response => {
         console.log('response from transactionDetail: ', response);
+
+        dispatch({
+          type: FETCH_END
+        });
+
         dispatch({
           type: TRANSACTION_DETAIL,
           payload: {
@@ -109,26 +115,30 @@ export const transactionExecute = (id) => {
         console.log('response from transaction-execution: ', response);
 
         dispatch({
+          type: FETCH_END
+        });
+
+        dispatch({
           type: TRANSACTION_EXECUTION,
           payload: {
             status: SAVING
           }
         });
+
         //Make a call to save transaction on USB
-
-        return setTimeout(() => {
-
-          dispatch({
-            type: TRANSACTION_EXECUTION,
-            payload: {
-              status: SAVED
-            }
+        writeToUSB(response.data)
+          .then(() => {
+            dispatch({
+              type: TRANSACTION_EXECUTION,
+              payload: {
+                status: SAVED
+              }
+            });
+          })
+          .catch(error => {
+            dispatch(handleError(error, false));
           });
-          dispatch({
-            type: FETCH_END
-          });
 
-        }, 3000);
 
       })
       .catch(error => {
