@@ -19,16 +19,7 @@ const styles = {
 }
 
 export default ({ detail }) => {
-  const {
-    coldWalletDesc,
-    coldWalletFileName,
-    coldWalletAddress,
-    hotWalletDesc,
-    hotWalletAddress
-  } = detail.data;
-  const coldWallet = `${coldWalletDesc} ${coldWalletFileName || coldWalletAddress}`;
-  const hotWallet = `${hotWalletDesc} ${hotWalletAddress}`;
-
+  
   return (
     <List>
       <ListItem

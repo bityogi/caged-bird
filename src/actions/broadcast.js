@@ -13,11 +13,10 @@ import {
   RETRIEVING,
   RETRIEVED,
   SUBMITTING,
-  // SUBMIT_ERROR,
   SUBMITTED,
 } from 'util/broadcastStatus';
 
-import { showNotification } from './notification';
+// import { showNotification } from './notification';
 import { handleError } from './util';
 
 

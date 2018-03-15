@@ -23,7 +23,7 @@
     "redux-thunk": "^2.2.0",
     "wait-on": "^2.1.0"
   },
-  "main": "src/electron-starter.js",
+  "main": "src/main.js",
   "homepage": "./",
   "scripts": {
     "electron-start": "electron .",
