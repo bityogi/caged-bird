@@ -13,10 +13,10 @@ import {
 import {
   PENDING,
   CREATING,
-  // CREATED,
-  // CREATE_ERROR,
   SAVING,
   SAVED,
+  UPDATING_STATUS,
+  STATUS_UPDATED,
   // SAVE_ERROR,
 } from 'util/transactionStatus';
 
@@ -123,7 +123,7 @@ export const transactionExecute = (id) => {
         });
 
         //Make a call to save transaction on USB
-        writeToUSB(response.data)
+        return writeToUSB(response.data)
           .then(() => {
             console.log('successfully written data to USB');
             dispatch({
@@ -132,6 +132,9 @@ export const transactionExecute = (id) => {
                 status: SAVED
               }
             });
+            //Update transaction status
+            const status = 'In Progress'
+            dispatch(updateTransactionStatus(id, status));
           })
           .catch(error => {
             dispatch(handleError(error, false));
@@ -142,6 +145,41 @@ export const transactionExecute = (id) => {
       .catch(error => {
         dispatch(handleError(error.response, true));
       });
+  }
+}
+
+const updateTransactionStatus = (id, status) => {
+  return dispatch => {
+    dispatch({
+      type: FETCH_START
+    });
+
+    dispatch({
+      type: TRANSACTION_EXECUTION,
+      payload: {
+        status: UPDATING_STATUS
+      }
+    });
+
+    return authClient().patch(`transactions/${id}/${status}`, {})
+      .then(response => {
+        console.log('response from updateTxStatus: ', response);
+        dispatch({
+          type: FETCH_END
+        });
+
+        dispatch({
+          type: TRANSACTION_EXECUTION,
+          payload: {
+            status: STATUS_UPDATED
+          }
+        });
+
+      })
+      .catch(error => {
+        console.log('error while updating status');
+        dispatch(handleError(error, true));
+      })
   }
 }
 

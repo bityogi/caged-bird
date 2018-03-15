@@ -33,6 +33,9 @@ import {
   SAVING,
   SAVED,
   SAVE_ERROR,
+  UPDATING_STATUS,
+  STATUS_UPDATED,
+  UPDATING_STATUS_ERROR
 } from 'util/transactionStatus';
 import { formatDate } from 'util/format';
 
@@ -73,6 +76,7 @@ class Transactions extends Component {
     this.setState({ open: false, selectedTransaction: null });
     if (initialize) {
       this.props.initializeTransaction();
+      this.props.pendingTransactions();
     }
   }
 
@@ -133,6 +137,9 @@ class Transactions extends Component {
       SAVING,
       SAVED,
       SAVE_ERROR,
+      STATUS_UPDATED,
+      UPDATING_STATUS,
+      UPDATING_STATUS_ERROR
     ]
 
     const actionStyles = {
@@ -165,7 +172,7 @@ class Transactions extends Component {
         label="OK"
         onClick={() => this.handleCloseTransactionDialog(true)}
         style={actionStyles.okButton}
-        disabled={executionStatus !== SAVED}
+        disabled={executionStatus !== STATUS_UPDATED}
       />
     ]
 

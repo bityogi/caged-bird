@@ -5,3 +5,6 @@ export const CREATE_ERROR = 'CREATE_ERROR';
 export const SAVING = 'SAVING';
 export const SAVED = 'SAVED'; //IN_PROCESSING
 export const SAVE_ERROR = 'SAVE_ERROR';
+export const UPDATING_STATUS = 'UPDATING_STATUS';
+export const STATUS_UPDATED = 'STATUS_UPDATED';
+export const UPDATING_STATUS_ERROR = 'UPDATING_STATUS_ERROR';
