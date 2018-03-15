@@ -10,6 +10,7 @@ const drivelist = remote.require('drivelist');
 
 export const getUSBData = () => {
   var deferred = Q.defer();
+  console.log('getUSBData start');
   try {
 
     drivelist.list((error, drives) => {
@@ -18,10 +19,23 @@ export const getUSBData = () => {
         deferred.reject(error);
       }
       let usbFound = false;
+      console.log('drives found: ', drives);
       _.map(drives, d => {
-        if (d.isUSB) {
+        console.log('JSON drive: ', JSON.stringify(d));
+        console.log('checking drive: ', d);
+        console.log('drive isUSB: ', d.isUSB);
+        console.log('drive isRemovable: ', d.isRemovable);
+        console.log('drive device: ', d.device);
+        console.log('drive mountpoint: ', d.mountpoints[0]);
+        console.log('drive busType: ', d.busType);
+        console.log('drive blockSize: ', d.blockSize);
+        console.log('drive description: ', d.description);
+        console.log('drive isSystem: ', d.isSystem);
+        if (d.isUSB || !d.isSystem) {
+          console.log('Found a drive that is either a USB or marked as non-system');
           usbFound = true;
           const mountPath = d.mountpoints[0].path.toString();
+          console.log('mountpath = ', mountPath);
           const infoFile = process.env.REACT_APP_READ_TX_FILENAME;
           const infoFilePath = path.join(mountPath, infoFile);
 
@@ -67,7 +81,7 @@ export const writeToUSB = (data) => {
       }
       let usbFound = false;
       _.map(drives, d => {
-        if (d.isUSB) {
+        if (d.isUSB || !d.isSystem) {
           usbFound = true;
           const mountPath = d.mountpoints[0].path.toString();
           const fileName = process.env.REACT_APP_WRITE_FILENAME;

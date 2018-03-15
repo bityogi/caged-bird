@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "Central": "https://github.com/10thFloorSoft/Central.git",
     "axios": "^0.18.0",
     "concurrently": "^3.5.1",
     "drivelist": "^6.1.1",
@@ -33,7 +32,8 @@
     "start": "cross-env ELECTRON_START_URL=http://localhost:3000/ run-p react-start electron-dev",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "dev": "cross-env NODE_PATH=./src npm run start"
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.14.1",
