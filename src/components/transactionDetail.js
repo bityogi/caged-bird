@@ -19,6 +19,16 @@ const styles = {
 }
 
 export default ({ detail }) => {
+  const {
+    coldWalletDesc,
+    coldWalletFileName,
+    coldWalletAddress,
+    hotWalletDesc,
+    hotWalletAddress
+  } = detail.data;
+  const coldWallet = `${coldWalletDesc} ${coldWalletFileName || coldWalletAddress}`;
+  const hotWallet = `${hotWalletDesc} ${hotWalletAddress}`;
+
   return (
     <List>
       <ListItem
@@ -47,13 +57,27 @@ export default ({ detail }) => {
       />
       <ListItem
         primaryText="Cold Wallet"
-        secondaryText={detail.data.coldWallet}
+        secondaryText={
+          <p>
+            {detail.data.coldWalletDesc}
+            <br />
+            {`${detail.data.coldWalletFileName || detail.data.coldWalletAddress}`}
+          </p>
+        }
+        secondaryTextLines={2}
         innerDivStyle={styles.listItems}
         leftIcon={<FontIcon className="material-icons" style={styles.icon}>account_balance_wallet</FontIcon>}
       />
       <ListItem
         primaryText="Hot Wallet"
-        secondaryText={detail.data.hotWallet}
+        secondaryText={
+          <p>
+            {detail.data.hotWalletDesc}
+            <br />
+            {`${detail.data.hotWalletAddress}`}
+          </p>
+        }
+        secondaryTextLines={2}
         innerDivStyle={styles.listItems}
         leftIcon={<FontIcon className="material-icons" style={styles.icon}>camera_enhance</FontIcon>}
       />

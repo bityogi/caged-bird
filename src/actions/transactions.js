@@ -128,6 +128,7 @@ export const transactionExecute = (id) => {
         //Make a call to save transaction on USB
         writeToUSB(response.data)
           .then(() => {
+            console.log('successfully written data to USB');
             dispatch({
               type: TRANSACTION_EXECUTION,
               payload: {

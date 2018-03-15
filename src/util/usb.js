@@ -61,6 +61,7 @@ export const getUSBData = () => {
 export const writeToUSB = (data) => {
   var deferred = Q.defer();
 
+  console.log('writing data to USB: ', data);
   try {
     drivelist.list((error, drives) => {
       if (error) {
@@ -75,7 +76,7 @@ export const writeToUSB = (data) => {
           const fileName = process.env.REACT_APP_WRITE_FILENAME;
           const filePath = path.join(mountPath, fileName);
 
-          fs.writeFileSync(filePath, data);
+          fs.writeFileSync(filePath, JSON.stringify(data));
           deferred.resolve();
         }
       });
