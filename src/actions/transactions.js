@@ -1,5 +1,5 @@
-import { authClient } from 'util/axios';
 import { writeToUSB } from 'util/usb';
+import { authClient } from 'util/axios';
 
 import {
   PENDING_TRANSACTIONS,
@@ -145,8 +145,6 @@ export const transactionExecute = (id) => {
       .catch(error => {
         dispatch(handleError(error.response, true));
       });
-
-
   }
 }
 
