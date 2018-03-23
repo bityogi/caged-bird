@@ -22,6 +22,7 @@ import {
 
 import { showNotification } from './notification';
 import { handleError } from './util';
+import { writeInfoToUSB } from '../util/usb';
 
 
 export const pendingTransactions = () => {
@@ -92,7 +93,7 @@ export const transactionDetail = (id) => {
   }
 }
 
-export const transactionExecute = (id) => {
+export const transactionExecute = (id, txobj) => {
   console.log('executing transaction with id: ', id);
 
   return dispatch => {
@@ -122,9 +123,10 @@ export const transactionExecute = (id) => {
           }
         });
 
-        //Make a call to save transaction on USB
+        //Make a call to save transaction on USB        
         return writeToUSB(response.data)
           .then(() => {
+            writeInfoToUSB(txobj).then(() => {
             console.log('successfully written data to USB');
             dispatch({
               type: TRANSACTION_EXECUTION,
@@ -139,13 +141,15 @@ export const transactionExecute = (id) => {
           .catch(error => {
             dispatch(handleError(error, false));
           });
-
-
       })
       .catch(error => {
         dispatch(handleError(error.response, true));
       });
-  }
+    })
+    .catch(error => {
+      dispatch(handleError(error.response, true));
+    });
+}
 }
 
 const updateTransactionStatus = (id, status) => {

@@ -102,3 +102,37 @@ export const writeToUSB = (data) => {
 
   return deferred.promise;
 }
+
+export const writeInfoToUSB = (data) => {
+  var deferred = Q.defer();
+
+  console.log('writing Info data to USB: ', data);
+  try {
+    drivelist.list((error, drives) => {
+      if (error) {
+        console.error('Error reading drive list: ', error);
+        deferred.reject(error);
+      }
+      let usbFound = false;
+      _.map(drives, d => {
+        if (d.isUSB || !d.isSystem) {
+          usbFound = true;
+          const mountPath = d.mountpoints[0].path.toString();
+          const fileName = process.env.REACT_APP_READ_TX_FILENAME;
+          const filePath = path.join(mountPath, fileName);
+
+          fs.writeFileSync(filePath, JSON.stringify(data));
+          deferred.resolve();
+        }
+      });
+      if (!usbFound) {
+        deferred.reject('No USB Found');
+      }
+    });
+  } catch (e) {
+    console.log(e);
+    deferred.reject(e);
+  }
+
+  return deferred.promise;
+}

@@ -59,6 +59,8 @@ class Transactions extends Component {
       selectedTransaction: null
     };
 
+    this.selectedTxObj = null;
+
     this.handleCloseTransactionDialog = this.handleCloseTransactionDialog.bind(this);
   }
 
@@ -82,11 +84,12 @@ class Transactions extends Component {
 
   handleTransactionExecution() {
     console.log('handle transaction signing');
-    this.props.transactionExecute(this.state.selectedTransaction);
+    this.props.transactionExecute(this.state.selectedTransaction, this.selectedTxObj);
   }
 
   handleRowSelection(index) {
     const selected = this.props.transactions[index];
+    this.selectedTxObj = this.props.transactions[index];
 
     console.log('selected transaction: ', selected);
     this.props.transactionDetail(selected.transactionId);
