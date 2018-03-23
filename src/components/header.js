@@ -8,7 +8,7 @@ import { withRouter } from 'react-router-dom';
 import { logout } from 'actions';
 import theme from 'theme';
 import logo from 'assets/images/LOGO_WHITE.png';
-
+import cagedbirdLogo from 'assets/images/Artboard 3 copy 11.png';
 
 
 const { primary1Color, textColor } = theme.palette;
@@ -59,9 +59,7 @@ class Header extends Component {
 
 
           <ToolbarGroup firstChild={true} >
-
-            <ToolbarTitle text="Caged Bird" style={styles.title} onClick={this.navigateHome.bind(this)} />
-            <ToolbarSeparator style={styles.separator} />
+            <img src={cagedbirdLogo} height={56} width={200} style={styles.logo} alt={'Caged-Bird'} onClick={this.navigateHome.bind(this)}/>
           </ToolbarGroup>
 
 
