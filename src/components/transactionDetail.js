@@ -30,7 +30,7 @@ export default ({ detail }) => {
       />
       <ListItem
         primaryText="Client"
-        secondaryText={detail.data.clientAccount}
+        secondaryText={detail.data.client}
         innerDivStyle={styles.listItems}
         leftIcon={<FontIcon className="material-icons" style={styles.icon}>person_pin</FontIcon>}
       />
@@ -42,7 +42,7 @@ export default ({ detail }) => {
       />
       <ListItem
         primaryText="Account"
-        secondaryText={detail.data.account}
+        secondaryText={detail.data.clientAccount}
         innerDivStyle={styles.listItems}
         leftIcon={<FontIcon className="material-icons" style={styles.icon}>account_balance</FontIcon>}
       />
