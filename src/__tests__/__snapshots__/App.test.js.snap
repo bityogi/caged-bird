@@ -48,42 +48,19 @@ exports[`App renders correctly 1`] = `
             }
           }
         >
-          <span
+          <img
+            alt="Caged-Bird"
+            height={56}
             onClick={[Function]}
+            src="Artboard 3 copy 11.png"
             style={
               Object {
-                "color": "rgba(0, 0, 0, 0.87)",
-                "cursor": "pointer",
-                "fontFamily": "Roboto, sans-serif",
-                "fontSize": "1.8em",
-                "lineHeight": "56px",
-                "marginLeft": 25,
-                "muiPrepared": true,
-                "overflow": "hidden",
-                "paddingRight": 16,
-                "position": "relative",
-                "textOverflow": "ellipsis",
-                "whiteSpace": "nowrap",
+                "marginBottom": 3,
+                "marginRight": 50,
+                "marginTop": 3,
               }
             }
-          >
-            Caged Bird
-          </span>
-          <span
-            className={undefined}
-            style={
-              Object {
-                "backgroundColor": "rgba(0, 0, 0, 0.175)",
-                "color": "rgba(0, 0, 0, 0.4)",
-                "display": "block",
-                "height": 32,
-                "lineHeight": "56px",
-                "margin": 20,
-                "marginLeft": 24,
-                "muiPrepared": true,
-                "width": "2px",
-              }
-            }
+            width={200}
           />
         </div>
         <div
