@@ -32,6 +32,7 @@
     "start": "cross-env ELECTRON_START_URL=http://localhost:3000/ run-p react-start electron-dev",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
+    "test:teamcity": "react-scripts test --env=jsdom --testResultsProcessor=jest-teamcity-reporter",
     "eject": "react-scripts eject",
     "dev": "cross-env NODE_PATH=./src npm run start"
   },
@@ -46,8 +47,5 @@
     "react-test-renderer": "^16.2.0",
     "redux-mock-store": "^1.5.1",
     "redux-testkit": "^1.0.6"
-  },
-  "jest": {
-    "testResultsProcessor": "jest-teamcity-reporter"
   }
 }
