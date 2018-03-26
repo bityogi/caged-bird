@@ -36,13 +36,13 @@ export const getUSBData = () => {
           usbFound = true;
           const mountPath = d.mountpoints[0].path.toString();
           console.log('mountpath = ', mountPath);
-          const infoFile = process.env.REACT_APP_READ_TX_FILENAME;
+          const infoFile = process.env.REACT_APP_TX_FILENAME;
           const infoFilePath = path.join(mountPath, infoFile);
 
           const txInfo = fs.readFileSync(infoFilePath, 'utf-8');
           const txData = JSON.parse(txInfo.toString());
 
-          const dataFile = process.env.REACT_APP_READ_SIGNED_FILENAME;
+          const dataFile = process.env.REACT_APP_SIGNED_FILENAME;
           const dataFilePath = path.join(mountPath, dataFile);
 
           var data = fs.readFileSync(dataFilePath, 'utf-8');
@@ -84,7 +84,7 @@ export const writeToUSB = (data) => {
         if (d.isUSB || !d.isSystem) {
           usbFound = true;
           const mountPath = d.mountpoints[0].path.toString();
-          const fileName = process.env.REACT_APP_WRITE_FILENAME;
+          const fileName = process.env.REACT_APP_UNSIGNED_FILENAME;
           const filePath = path.join(mountPath, fileName);
 
           fs.writeFileSync(filePath, JSON.stringify(data));
@@ -118,7 +118,7 @@ export const writeInfoToUSB = (data) => {
         if (d.isUSB || !d.isSystem) {
           usbFound = true;
           const mountPath = d.mountpoints[0].path.toString();
-          const fileName = process.env.REACT_APP_READ_TX_FILENAME;
+          const fileName = process.env.REACT_APP_TX_FILENAME;
           const filePath = path.join(mountPath, fileName);
 
           fs.writeFileSync(filePath, JSON.stringify(data));
