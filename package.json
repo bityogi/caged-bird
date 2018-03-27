@@ -7,6 +7,7 @@
     "axios": "^0.18.0",
     "concurrently": "^3.5.1",
     "drivelist": "^6.1.1",
+    "electron-is-dev": "^0.3.0",
     "lodash": "^4.17.5",
     "material-ui": "^0.20.0",
     "q": "^1.5.1",
@@ -22,7 +23,7 @@
     "redux-thunk": "^2.2.0",
     "wait-on": "^2.1.0"
   },
-  "main": "src/main.js",
+  "main": "public/main.js",
   "homepage": "./",
   "scripts": {
     "electron-start": "electron .",
@@ -38,11 +39,14 @@
     "package-all": "npm run build && build -mwl",
     "package-linux": "npm run build && build --linux",
     "package-mac": "npm run build && build --mac",
-    "dev": "cross-env NODE_PATH=./src npm run start"
+    "dev": "cross-env NODE_PATH=./src npm run start",
+    "electron-pack": "build --c.extraMetadata.main=build/main.js",
+    "preelectron-pack": "yarn build"
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.14.1",
-    "electron-builder": "^20.8.0",
+    "electron": "^1.8.4",
+    "electron-builder": "^20.8.1",
     "electron-prebuilt": "^1.4.13",
     "enzyme": "^3.3.0",
     "foreman": "^2.0.0",
@@ -51,54 +55,41 @@
     "react-app-env": "^1.2.0",
     "react-test-renderer": "^16.2.0",
     "redux-mock-store": "^1.5.1",
-    "redux-testkit": "^1.0.6",
-    "electron": "^1.8.3"
+    "redux-testkit": "^1.0.6"
   },
-
   "build": {
     "productName": "CagedBird",
     "appId": "com.dacc.cagedbird",
     "extends": null,
     "files": [
-        {
-          "from": ".",
-          "to": ".",
-          "filter": [
-              "public/",
-              "node_modules/",
-              "src/main.js",
-              "package.json"
-          ]
-        },
-        {
-            "from": "./caged-bird/build",
-            "to": ".",
-            "filter": ["**/*"]
-        }
-      ],
-      "mac": {
-        "artifactName": "${productName}-${version}-osx.${ext}",
-        "category": "public.app-category.productivity",
-        "target": [
-          "dmg",
-          "zip"
-        ]
-      },
-      "linux": {
-        "artifactName": "${productName}-${version}-${arch}-linux.${ext}",
-        "maintainer": "xxxx",
-        "target": [
-          "tar.gz",
-          "deb",
-          "rpm"
-        ]
-      },
-      "win": {
-        "target": [
-          "zip",
-          "dir"
-        ]
-      }
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    },
+    "mac": {
+      "artifactName": "${productName}-${version}-osx.${ext}",
+      "category": "public.app-category.productivity",
+      "target": [
+        "dmg",
+        "zip"
+      ]
+    },
+    "linux": {
+      "artifactName": "${productName}-${version}-${arch}-linux.${ext}",
+      "maintainer": "xxxx",
+      "target": [
+        "tar.gz",
+        "deb",
+        "rpm"
+      ]
+    },
+    "win": {
+      "target": [
+        "zip",
+        "dir"
+      ]
     }
-    
+  }
 }
