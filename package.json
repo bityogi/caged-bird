@@ -23,7 +23,7 @@
     "redux-thunk": "^2.2.0",
     "wait-on": "^2.1.0"
   },
-  "main": "public/main.js",
+  "main": "./public/main.js",
   "homepage": "./",
   "scripts": {
     "electron-start": "electron .",
@@ -31,12 +31,12 @@
     "wait-dev": "wait-on $ELECTRON_START_URL",
     "electron-dev": "run-s wait-dev electron-start",
     "start": "cross-env ELECTRON_START_URL=http://localhost:3000/ run-p react-start electron-dev",
-    "build": "react-scripts build",
+    "build": "cross-env NODE_PATH=./src react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "test:teamcity": "react-scripts test --env=jsdom --testResultsProcessor=jest-teamcity-reporter",
     "eject": "react-scripts eject",
     "package": "npm run build && build --publish never",
-    "package-linux": "build --c.extraMetadata.main=build/main.js --linux",
+    "package-linux": "npm run build && build --c.extraMetadata.main=build/main.js --linux",
     "package-mac": "npm run build && build --c.extraMetadata.main=build/main.js --mac",
     "dev": "cross-env NODE_PATH=./src npm run start"
   },
@@ -75,11 +75,10 @@
     },
     "linux": {
       "artifactName": "${productName}-${version}-${arch}-linux.${ext}",
-      "maintainer": "xxxx",
+      "maintainer": "bityogi",
       "target": [
         "tar.gz",
-        "deb",
-        "rpm"
+        "deb"
       ]
     },
     "win": {
