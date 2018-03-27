@@ -36,12 +36,9 @@
     "test:teamcity": "react-scripts test --env=jsdom --testResultsProcessor=jest-teamcity-reporter",
     "eject": "react-scripts eject",
     "package": "npm run build && build --publish never",
-    "package-all": "npm run build && build -mwl",
-    "package-linux": "npm run build && build --linux",
-    "package-mac": "npm run build && build --mac",
-    "dev": "cross-env NODE_PATH=./src npm run start",
-    "electron-pack": "build --c.extraMetadata.main=build/main.js",
-    "preelectron-pack": "yarn build"
+    "package-linux": "build --c.extraMetadata.main=build/main.js --linux",
+    "package-mac": "npm run build && build --c.extraMetadata.main=build/main.js --mac",
+    "dev": "cross-env NODE_PATH=./src npm run start"
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.14.1",

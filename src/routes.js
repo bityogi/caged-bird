@@ -5,7 +5,7 @@ import Login from 'containers/login';
 import Transactions from 'containers/transactions';
 import Landing from 'components/landing';
 import Broadcast from 'containers/broadcast';
-import NotFound from 'components/notFound';
+// import NotFound from 'components/notFound';
 
 export default () => {
   return (
@@ -14,7 +14,7 @@ export default () => {
       <Route exact path="/landing" component={Landing} />
       <Route exact path="/transactions" component={Transactions} />
       <Route exact path="/broadcast" component={Broadcast} />
-      <Route path="*" component={NotFound} />
+      <Route path="*" component={Login} />
     </Switch>
   )
 
