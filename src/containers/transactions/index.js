@@ -84,16 +84,15 @@ class Transactions extends Component {
 
   handleTransactionExecution() {
     console.log('handle transaction signing');
-    this.props.transactionExecute(this.state.selectedTransaction, this.selectedTxObj);
+    this.props.transactionExecute(this.state.selectedTransaction);
   }
 
   handleRowSelection(index) {
     const selected = this.props.transactions[index];
-    this.selectedTxObj = this.props.transactions[index];
 
     console.log('selected transaction: ', selected);
-    this.props.transactionDetail(selected.transactionId);
-    this.setState({ open: true, selectedTransaction: selected.transactionId });
+    this.props.transactionDetail(selected);
+    this.setState({ open: true, selectedTransaction: selected });
 
   }
 
@@ -145,9 +144,16 @@ class Transactions extends Component {
       UPDATING_STATUS_ERROR
     ]
 
+    const enabledOKStatusOptions = [
+      STATUS_UPDATED,
+      CREATE_ERROR,
+      SAVE_ERROR,
+      UPDATING_STATUS_ERROR
+    ];
+
     const actionStyles = {
       executeButton: {
-        display: executionStatus === PENDING ? 'inline-block' : 'none',
+        display: (executionStatus === PENDING && !(transaction.detail.error))? 'inline-block' : 'none',
       },
       cancelButton: {
         display: executionStatus === PENDING ? 'inline-block' : 'none',
@@ -175,7 +181,7 @@ class Transactions extends Component {
         label="OK"
         onClick={() => this.handleCloseTransactionDialog(true)}
         style={actionStyles.okButton}
-        disabled={executionStatus !== STATUS_UPDATED}
+        disabled={!enabledOKStatusOptions.includes(executionStatus)}
       />
     ]
 
@@ -189,12 +195,12 @@ class Transactions extends Component {
       >
         {
           detail.loading ?
-            <CircularProgress />
-            :
-            executionStatus === PENDING ?
-              <TransactionDetail detail={detail} />
-              :
-              this.renderTransactionExecution()
+           <span>Loading Transaction Details .... <CircularProgress /></span>
+           :
+           executionStatus === PENDING ?
+             <TransactionDetail detail={detail} />
+             :
+             this.renderTransactionExecution()
         }
 
       </Dialog>
@@ -207,6 +213,8 @@ class Transactions extends Component {
 
     return (
       <div>
+        <span>TransactionId: {transaction.detail.data.transactionId}</span>
+        <br />
         <span>Creating unsigned transaction and writing data</span>
         <br />
         <span>Status: {executionStatus}</span>

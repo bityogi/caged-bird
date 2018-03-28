@@ -17,7 +17,8 @@ import {
   SAVED,
   UPDATING_STATUS,
   STATUS_UPDATED,
-  // SAVE_ERROR,
+  SAVE_ERROR,
+  CREATE_ERROR,
 } from 'util/transactionStatus';
 
 import { showNotification } from './notification';
@@ -54,8 +55,8 @@ export const pendingTransactions = () => {
   }
 }
 
-export const transactionDetail = (id) => {
-  console.log('getting transaction Detail for id: ', id);
+export const transactionDetail = (transaction) => {
+  console.log('getting transaction Detail for id: ', transaction.transactionId);
 
   return dispatch => {
     dispatch({
@@ -70,7 +71,7 @@ export const transactionDetail = (id) => {
       }
     })
 
-    return authClient().get(`transactions/${id}`)
+    return authClient().get(`transactions/${transaction.transactionId}`)
       .then(response => {
         console.log('response from transactionDetail: ', response);
 
@@ -88,13 +89,22 @@ export const transactionDetail = (id) => {
       })
       .catch(error => {
         dispatch(handleError(error.response, true));
+        dispatch({
+          type: TRANSACTION_DETAIL,
+          payload: {
+            loading: false,
+            data: {},
+            error: true,
+            errorMessage: 'Error fetching transaction-detail'
+          }
+        });
       });
 
   }
 }
 
-export const transactionExecute = (id, txobj) => {
-  console.log('executing transaction with id: ', id);
+export const transactionExecute = (transaction) => {
+  console.log('executing transaction with id: ', transaction.transactionId);
 
   return dispatch => {
     dispatch({
@@ -108,7 +118,7 @@ export const transactionExecute = (id, txobj) => {
       }
     });
 
-    return authClient().patch(`transactions/${id}/unsigned`, {})
+    return authClient().patch(`transactions/${transaction.transactionId}/unsigned`, {})
       .then(response => {
         console.log('response from transaction-execution: ', response);
 
@@ -123,10 +133,10 @@ export const transactionExecute = (id, txobj) => {
           }
         });
 
-        //Make a call to save transaction on USB        
+        //Make a call to save transaction on USB
         return writeToUSB(response.data)
           .then(() => {
-            writeInfoToUSB(txobj).then(() => {
+            writeInfoToUSB(transaction).then(() => {
             console.log('successfully written data to USB');
             dispatch({
               type: TRANSACTION_EXECUTION,
@@ -136,17 +146,29 @@ export const transactionExecute = (id, txobj) => {
             });
             //Update transaction status
             const status = 'In Progress'
-            dispatch(updateTransactionStatus(id, status));
+            dispatch(updateTransactionStatus(transaction.transactionId, status));
           })
           .catch(error => {
             dispatch(handleError(error, false));
           });
       })
       .catch(error => {
-        dispatch(handleError(error.response, true));
+        dispatch({
+          type: TRANSACTION_EXECUTION,
+          payload: {
+            status: SAVE_ERROR
+          }
+        });
+        dispatch(handleError(error.response, false));
       });
     })
     .catch(error => {
+      dispatch({
+        type: TRANSACTION_EXECUTION,
+        payload: {
+          status: CREATE_ERROR
+        }
+      });
       dispatch(handleError(error.response, true));
     });
 }
