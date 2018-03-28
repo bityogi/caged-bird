@@ -115,10 +115,10 @@ class Transactions extends Component {
             value={t}
             style={{ textAlign: 'center' }}
           >
-            <TableRowColumn style={{ width: '20%', ...styles.rowColumn }}>{t.clientAccount}</TableRowColumn>
-            <TableRowColumn style={{ width: '20%', ...styles.rowColumn }}>{t.coinDescription}</TableRowColumn>
-            <TableRowColumn style={{ width: '15%', ...styles.rowColumn }}>{t.account}</TableRowColumn>
-            <TableRowColumn style={{ width: '25%', ...styles.rowColumn }}>{`${t.ticker} ${Number.parseFloat(t.amount).toFixed(8)}`}</TableRowColumn>
+            <TableRowColumn style={{ width: '20%', ...styles.rowColumn }}>{t.client}</TableRowColumn>
+            <TableRowColumn style={{ width: '15%', ...styles.rowColumn }}>{t.coinDescription}</TableRowColumn>
+            <TableRowColumn style={{ width: '25%', ...styles.rowColumn }}>{t.clientAccount}</TableRowColumn>
+            <TableRowColumn style={{ width: '20%', ...styles.rowColumn }}>{`${t.formattedAmount}`}</TableRowColumn>
             <TableRowColumn style={{ width: '20%', ...styles.rowColumn }}>{formatDate(t.generatedOn)}</TableRowColumn>
           </TableRow>
         )
@@ -223,9 +223,9 @@ class Transactions extends Component {
           <TableHeader displaySelectAll={false} enableSelectAll={false} adjustForCheckbox={false}>
             <TableRow>
               <TableHeaderColumn style={{ ...styles.headerColumn, width: '20%' }}>Client</TableHeaderColumn>
-              <TableHeaderColumn style={{ ...styles.headerColumn, width: '20%' }}>Coin</TableHeaderColumn>
-              <TableHeaderColumn style={{ ...styles.headerColumn, width: '15%' }}>Account</TableHeaderColumn>
-              <TableHeaderColumn style={{ ...styles.headerColumn, width: '25%' }}>Amount</TableHeaderColumn>
+              <TableHeaderColumn style={{ ...styles.headerColumn, width: '15%' }}>Coin</TableHeaderColumn>
+              <TableHeaderColumn style={{ ...styles.headerColumn, width: '25%' }}>Account</TableHeaderColumn>
+              <TableHeaderColumn style={{ ...styles.headerColumn, width: '20%' }}>Amount</TableHeaderColumn>
               <TableHeaderColumn style={{ ...styles.headerColumn, width: '20%' }}>Gen Time</TableHeaderColumn>
             </TableRow>
           </TableHeader>

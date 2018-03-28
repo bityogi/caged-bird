@@ -393,7 +393,7 @@ exports[`Landing renders correctly 1`] = `
                 "margin": 12,
                 "muiPrepared": true,
                 "position": "absolute",
-                "top": 0,
+                "top": 12,
                 "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
                 "userSelect": "none",
                 "width": 24,
@@ -410,6 +410,27 @@ exports[`Landing renders correctly 1`] = `
             }
           >
             Account
+          </div>
+          <div
+            style={
+              Object {
+                "WebkitBoxOrient": null,
+                "WebkitLineClamp": null,
+                "color": "rgba(0, 0, 0, 0.54)",
+                "display": null,
+                "fontSize": 14,
+                "height": 16,
+                "lineHeight": "16px",
+                "margin": 0,
+                "marginTop": 4,
+                "muiPrepared": true,
+                "overflow": "hidden",
+                "textOverflow": "ellipsis",
+                "whiteSpace": "nowrap",
+              }
+            }
+          >
+            Offshore
           </div>
         </div>
       </div>
@@ -1076,7 +1097,7 @@ exports[`Landing renders correctly 1`] = `
                 "margin": 12,
                 "muiPrepared": true,
                 "position": "absolute",
-                "top": 0,
+                "top": 12,
                 "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
                 "userSelect": "none",
                 "width": 24,
@@ -1093,6 +1114,27 @@ exports[`Landing renders correctly 1`] = `
             }
           >
             Gen Time
+          </div>
+          <div
+            style={
+              Object {
+                "WebkitBoxOrient": null,
+                "WebkitLineClamp": null,
+                "color": "rgba(0, 0, 0, 0.54)",
+                "display": null,
+                "fontSize": 14,
+                "height": 16,
+                "lineHeight": "16px",
+                "margin": 0,
+                "marginTop": 4,
+                "muiPrepared": true,
+                "overflow": "hidden",
+                "textOverflow": "ellipsis",
+                "whiteSpace": "nowrap",
+              }
+            }
+          >
+            3/25/2018, 7:54:53 PM
           </div>
         </div>
       </div>

@@ -15,13 +15,13 @@ describe('Landing', () => {
         id: 1234,
         client: 'Conger Inv',
         coin: 'Bitcoin',
-        account: 'Offshore',
+        clientAccount: 'Offshore',
         coldWallet: 'Wallet 1',
         hotWallet: '1f4567yggt',
-        amount: 231.66,
-        fee: 12.55,
+        formattedAmount: 231.66,
+        formattedFee: 12.55,
         memo: 'This transaction is good and will be executed soon',
-        genTime: '2018-03-07T09:18:26-05:00'
+        generatedOn: '2018-03-25T23:54:53.603'
       }
     }
     const rendered = renderer.create(

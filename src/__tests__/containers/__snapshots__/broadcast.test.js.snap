@@ -143,7 +143,7 @@ exports[`Login renders correctly 1`] = `
                   "textAlign": "left",
                   "textOverflow": "ellipsis",
                   "whiteSpace": "nowrap",
-                  "width": "20%",
+                  "width": "15%",
                 }
               }
             >
@@ -168,7 +168,7 @@ exports[`Login renders correctly 1`] = `
                   "textAlign": "left",
                   "textOverflow": "ellipsis",
                   "whiteSpace": "nowrap",
-                  "width": "15%",
+                  "width": "25%",
                 }
               }
             >
@@ -193,7 +193,7 @@ exports[`Login renders correctly 1`] = `
                   "textAlign": "left",
                   "textOverflow": "ellipsis",
                   "whiteSpace": "nowrap",
-                  "width": "25%",
+                  "width": "20%",
                 }
               }
             >

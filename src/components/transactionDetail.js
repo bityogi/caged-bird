@@ -4,6 +4,7 @@ import ActionInfo from 'material-ui/svg-icons/action/info';
 import FontIcon from 'material-ui/FontIcon';
 
 import theme from 'theme';
+import { formatDate } from 'util/format';
 
 const { palette: { primary1Color } } = theme;
 
@@ -19,7 +20,7 @@ const styles = {
 }
 
 export default ({ detail }) => {
-  
+
   return (
     <List>
       <ListItem
@@ -74,13 +75,13 @@ export default ({ detail }) => {
       />
       <ListItem
         primaryText="Amount"
-        secondaryText={detail.data.amount}
+        secondaryText={detail.data.formattedAmount}
         innerDivStyle={styles.listItems}
         leftIcon={<FontIcon className="material-icons" style={styles.icon}>monetization_on</FontIcon>}
       />
       <ListItem
         primaryText="Fee"
-        secondaryText={detail.data.fee}
+        secondaryText={detail.data.formattedFee}
         innerDivStyle={styles.listItems}
         leftIcon={<FontIcon className="material-icons" style={styles.icon}>attach_money</FontIcon>}
       />
@@ -92,7 +93,7 @@ export default ({ detail }) => {
       />
       <ListItem
         primaryText="Gen Time"
-        secondaryText={detail.data.generatedOn}
+        secondaryText={formatDate(detail.data.generatedOn)}
         innerDivStyle={styles.listItems}
         leftIcon={<FontIcon className="material-icons" style={styles.icon}>access_time</FontIcon>}
       />
