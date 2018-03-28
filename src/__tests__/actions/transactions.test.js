@@ -12,24 +12,44 @@ const mockStore = configureMockStore(middlewares);
 const mock = new MockAdapter(client);
 
 describe('Transactions actions', () => {
+
+  let store;
+
+  const initialState = {
+    transaction: {
+      detail: {
+        loading: false,
+        data: {}
+      },
+      execution: {
+        status: types.PENDING
+      }
+    }
+  }
+
+  const data = [{
+    "transactionId":1,
+    "clientAccount":"Digital Asset Custody Company",
+    "amount":0.0010100000,
+    "fee":null,
+    "generatedOn":"2018-01-23T16:47:00",
+    "memo":"DACC cold to CB hot 1",
+    "coinDescription":"Ethereum",
+    "ticker":"ETH",
+    "amountField":"Transaction.Amount",
+    "amountCalcMethodId":1,
+    "amountCalcMethodDesc":"Amount + Ticker",
+  }];
+
+  beforeEach(() => {
+    store = mockStore(initialState);
+  });
   afterEach(() => {
     mock.reset()
   });
 
   it('creates the right actions for pendingTransactions', async () => {
-    const data = [{
-      "transactionId":1,
-      "clientAccount":"Digital Asset Custody Company",
-      "amount":0.0010100000,
-      "fee":null,
-      "generatedOn":"2018-01-23T16:47:00",
-      "memo":"DACC cold to CB hot 1",
-      "coinDescription":"Ethereum",
-      "ticker":"ETH",
-      "amountField":"Transaction.Amount",
-      "amountCalcMethodId":1,
-      "amountCalcMethodDesc":"Amount + Ticker",
-    }];
+
 
     mock
       .onGet('/pendingTransactions/')
@@ -42,15 +62,22 @@ describe('Transactions actions', () => {
   });
 
   it('creates the right actions for transactionDetail', async () => {
-    const dispatches = await Thunk(actions.transactionDetail).execute();
 
-    expect(dispatches.length).toBe(3);
+    return store.dispatch(actions.transactionDetail(data[0]))
+      .then(() => {
+        const dispatches = store.getActions();
+        expect(dispatches.length).toBe(5);
+      });
+
   });
 
   it('creates the right actions for transactionExecute', async () => {
-    const dispatches = await Thunk(actions.transactionExecute).execute();
+    return store.dispatch(actions.transactionExecute(data[0]))
+      .then(() => {
+        const dispatches = store.getActions();
+        expect(dispatches.length).toBe(5);
+      });
 
-    expect(dispatches.length).toBe(3);
   });
 
   it('creates the right actions for initializeTransaction', async () => {
