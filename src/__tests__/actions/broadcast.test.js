@@ -77,7 +77,7 @@ describe('Broadcast actions', () => {
     return store.dispatch(actions.broadcastTransaction())
       .then(() => {
         const dispatches = store.getActions();
-        expect(dispatches.length).toBe(4);
+        expect(dispatches.length).toBe(5);
       })
 
   });
