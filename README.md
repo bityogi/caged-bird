@@ -47,18 +47,22 @@ npm run package-linux
 
 #### **REACT_APP_BLUEBIRD_API**
 Bluebird API url
+
 e.g: `http://bluebird:60541`
 
 #### **REACT_APP_TX_FILENAME**
 Name of file (can include any directory path) in the USB media
+
 e.g: `DACC/tx_info.txt`
 
 #### **REACT_APP_SIGNED_FILENAME**
 Name of the file (can include any directory path) that the caged-bird app will try to retrieve FROM the USB media in order to broadcast the transaction using Bluebird.
+
 e.g: `DACC/signed_tx.txt`
 
 #### **REACT_APP_UNSIGNED_FILENAME**
 Name of the file (can include any directory path) that the caged-bird app will try to write the unsigned-transaction TO the USB media.
+
 e.g: `DACC/unsigned_tx.txt`
 
 ---------
