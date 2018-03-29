@@ -12,6 +12,7 @@ import {
 import {
   RETRIEVING,
   RETRIEVED,
+  RETRIEVE_ERROR,
   SUBMITTING,
   SUBMITTED,
 } from 'util/broadcastStatus';
@@ -57,6 +58,10 @@ export const signedTransaction = () => {
       .catch(error => {
         console.error('Error retrieving USB data: ', error);
         dispatch(handleError(error, true));
+        dispatch({
+          type: BROADCAST_STATUS,
+          payload: RETRIEVE_ERROR
+        });
       });
 
   }

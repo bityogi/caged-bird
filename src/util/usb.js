@@ -22,15 +22,6 @@ export const getUSBData = () => {
       console.log('drives found: ', drives);
       _.map(drives, d => {
         console.log('JSON drive: ', JSON.stringify(d));
-        console.log('checking drive: ', d);
-        console.log('drive isUSB: ', d.isUSB);
-        console.log('drive isRemovable: ', d.isRemovable);
-        console.log('drive device: ', d.device);
-        console.log('drive mountpoint: ', d.mountpoints[0]);
-        console.log('drive busType: ', d.busType);
-        console.log('drive blockSize: ', d.blockSize);
-        console.log('drive description: ', d.description);
-        console.log('drive isSystem: ', d.isSystem);
         if (d.isUSB || !d.isSystem) {
           console.log('Found a drive that is either a USB or marked as non-system');
           usbFound = true;
@@ -38,21 +29,25 @@ export const getUSBData = () => {
           console.log('mountpath = ', mountPath);
           const infoFile = process.env.REACT_APP_TX_FILENAME;
           const infoFilePath = path.join(mountPath, infoFile);
+          try {
+            const txInfo = fs.readFileSync(infoFilePath, 'utf-8');
+            const txData = JSON.parse(txInfo.toString());
 
-          const txInfo = fs.readFileSync(infoFilePath, 'utf-8');
-          const txData = JSON.parse(txInfo.toString());
+            const dataFile = process.env.REACT_APP_SIGNED_FILENAME;
+            const dataFilePath = path.join(mountPath, dataFile);
 
-          const dataFile = process.env.REACT_APP_SIGNED_FILENAME;
-          const dataFilePath = path.join(mountPath, dataFile);
+            var data = fs.readFileSync(dataFilePath, 'utf-8');
 
-          var data = fs.readFileSync(dataFilePath, 'utf-8');
+            const signedTxPayload = {
+              ...txData,
+              payload: data.toString()
+            };
 
-          const signedTxPayload = {
-            ...txData,
-            payload: data.toString()
-          };
+            deferred.resolve(signedTxPayload);
+          } catch (e) {
+            deferred.reject('Error reading from USB.');
+          }
 
-          deferred.resolve(signedTxPayload);
         }
       });
 

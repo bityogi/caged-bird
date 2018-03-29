@@ -18,6 +18,7 @@ import {
 import {
   RETRIEVING,
   RETRIEVED,
+  RETRIEVE_ERROR,
   SUBMITTING,
   SUBMITTED,
 } from 'util/broadcastStatus';
@@ -33,12 +34,22 @@ const styles = {
   },
   progressBar: {
     marginTop: 25,
+  },
+  error: {
+    color: '#FF0000'
   }
 }
 class Broadcast extends Component {
 
   state = {
     requested: false,
+    tries: 0
+  }
+
+  handleRetry() {
+    const { tries } = this.state;
+    console.log('retrying again! tries:  ', tries);
+    this.setState({ requested: false, tries: tries + 1 });
   }
 
   handleTransactionBroadcast() {
@@ -70,7 +81,22 @@ class Broadcast extends Component {
           </div>
 
         );
-
+      case RETRIEVE_ERROR:
+        return (
+          <div>
+            <span style={styles.error}>Error while retrieving data from USB.</span>
+            <div>
+              Ensure USB is connected and the file exists:
+              <span>
+                <RaisedButton
+                  label="Try Again"
+                  primary={true}
+                  onClick={this.handleRetry.bind(this)}
+                />
+              </span>
+            </div>
+          </div>
+        )
       case RETRIEVED:
         return (
           <Card>

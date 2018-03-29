@@ -1,4 +1,5 @@
 export const RETRIEVING = 'RETRIEVING';
+export const RETRIEVE_ERROR = 'RETRIEVE_ERROR';
 export const RETRIEVED = 'RETRIEVED';
 export const SUBMITTING = 'SUBMITTING';
 export const SUBMITTED = 'SUBMITTED';
