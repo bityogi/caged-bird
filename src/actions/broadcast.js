@@ -15,6 +15,7 @@ import {
   RETRIEVE_ERROR,
   SUBMITTING,
   SUBMITTED,
+  SUBMIT_ERROR
 } from 'util/broadcastStatus';
 
 // import { showNotification } from './notification';
@@ -100,6 +101,10 @@ export const broadcastTransaction = () => {
         });
       })
       .catch(error => {
+        dispatch({
+          type: BROADCAST_STATUS,
+          payload:  SUBMIT_ERROR
+        });
         dispatch(handleError(error.response, true));
       });
 

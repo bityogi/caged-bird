@@ -21,6 +21,7 @@ import {
   RETRIEVE_ERROR,
   SUBMITTING,
   SUBMITTED,
+  SUBMIT_ERROR,
 } from 'util/broadcastStatus';
 
 import theme from 'theme';
@@ -43,13 +44,20 @@ class Broadcast extends Component {
 
   state = {
     requested: false,
-    tries: 0
+    usbTries: 0,
+    broadcastTries: 0,
   }
 
-  handleRetry() {
-    const { tries } = this.state;
-    console.log('retrying again! tries:  ', tries);
-    this.setState({ requested: false, tries: tries + 1 });
+  handleReadUSBRetry() {
+    const { usbTries } = this.state;
+    console.log('retrying again! tries:  ', usbTries);
+    this.setState({ requested: false, usbTries: usbTries + 1 });
+  }
+
+  handleBroadcastRetry() {
+    const { broadcastTries } = this.state;
+    console.log('retrying again! tries:  ', broadcastTries);
+    this.setState({ requested: false, broadcastTries: broadcastTries + 1 });
   }
 
   handleTransactionBroadcast() {
@@ -91,7 +99,7 @@ class Broadcast extends Component {
                 <RaisedButton
                   label="Try Again"
                   primary={true}
-                  onClick={this.handleRetry.bind(this)}
+                  onClick={this.handleReadUSBRetry.bind(this)}
                 />
               </span>
             </div>
@@ -134,7 +142,22 @@ class Broadcast extends Component {
           </div>
         );
 
-
+        case SUBMIT_ERROR:
+          return (
+            <div>
+              <span style={styles.error}>Error while broadcasting transaction.</span>
+              <div>
+                This was a bluebird API error:
+                <span>
+                  <RaisedButton
+                    label="Try Again"
+                    primary={true}
+                    onClick={this.handleBroadcastRetry.bind(this)}
+                  />
+                </span>
+              </div>
+            </div>
+          )
       default:
         return null;
     }
