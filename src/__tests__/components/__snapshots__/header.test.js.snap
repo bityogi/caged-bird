@@ -33,6 +33,22 @@ exports[`Header Component renders correctly 1`] = `
     >
       <img
         alt="Caged-Bird"
+        height={50}
+        onClick={[Function]}
+        src="Cagebird.png"
+        style={
+          Object {
+            "borderRadius": 5,
+            "marginBottom": 3,
+            "marginLeft": 5,
+            "marginRight": 5,
+            "marginTop": 3,
+          }
+        }
+        width={60}
+      />
+      <img
+        alt="Caged-Bird"
         height={56}
         onClick={[Function]}
         src="Artboard 3 copy 11.png"
@@ -66,8 +82,10 @@ exports[`Header Component renders correctly 1`] = `
         src="LOGO_WHITE.png"
         style={
           Object {
+            "borderRadius": 5,
             "marginBottom": 3,
-            "marginRight": 50,
+            "marginLeft": 5,
+            "marginRight": 5,
             "marginTop": 3,
           }
         }
