@@ -8,8 +8,8 @@ import { withRouter } from 'react-router-dom';
 import { logout } from 'actions';
 import theme from 'theme';
 import logo from 'assets/images/LOGO_WHITE.png';
-import cagedbirdLogo from 'assets/images/Artboard 3 copy 11.png';
-
+import cagedbirdTitle from 'assets/images/Artboard 3 copy 11.png';
+import cagedbirdLogo from 'assets/images/Cagebird.png';
 
 const { primary1Color, textColor } = theme.palette;
 
@@ -20,10 +20,17 @@ const styles = {
     color: textColor,
     fontSize: '1.8em',
   },
-  logo: {
+  titleImage: {
     marginRight: 50,
     marginTop: 3,
     marginBottom: 3,
+  },
+  logo: {
+    marginLeft: 5,
+    marginRight: 5,
+    marginTop: 3,
+    marginBottom: 3,
+    borderRadius: 5,
 
   },
   toolbar: {
@@ -59,7 +66,8 @@ class Header extends Component {
 
 
           <ToolbarGroup firstChild={true} >
-            <img src={cagedbirdLogo} height={56} width={200} style={styles.logo} alt={'Caged-Bird'} onClick={this.navigateHome.bind(this)}/>
+            <img src={cagedbirdLogo} height={50} width={60} style={styles.logo} alt={'Caged-Bird'} onClick={this.navigateHome.bind(this)}/>
+            <img src={cagedbirdTitle} height={56} width={200} style={styles.titleImage} alt={'Caged-Bird'} onClick={this.navigateHome.bind(this)}/>
           </ToolbarGroup>
 
 
