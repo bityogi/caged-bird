@@ -11,6 +11,9 @@ const drivelist = remote.require('drivelist');
 export const getUSBData = () => {
   var deferred = Q.defer();
   console.log('getUSBData start');
+  const infoFile = process.env.REACT_APP_TX_FILENAME;
+  const dataFile = process.env.REACT_APP_SIGNED_FILENAME;
+
   try {
 
     drivelist.list((error, drives) => {
@@ -21,32 +24,48 @@ export const getUSBData = () => {
       let usbFound = false;
       console.log('drives found: ', drives);
       _.map(drives, d => {
-        console.log('JSON drive: ', JSON.stringify(d));
         if (d.isUSB || !d.isSystem) {
-          console.log('Found a drive that is either a USB or marked as non-system');
-          usbFound = true;
-          const mountPath = d.mountpoints[0].path.toString();
-          console.log('mountpath = ', mountPath);
-          const infoFile = process.env.REACT_APP_TX_FILENAME;
-          const infoFilePath = path.join(mountPath, infoFile);
+          let mountPath;
+          let txData;
+          let signedTxPayload;
           try {
-            const txInfo = fs.readFileSync(infoFilePath, 'utf-8');
-            const txData = JSON.parse(txInfo.toString());
+            console.log('JSON USB (non-system) drive: ', JSON.stringify(d));
 
-            const dataFile = process.env.REACT_APP_SIGNED_FILENAME;
+            usbFound = true;
+            console.log('mountPoints = ', d.mountpoints);
+            console.log('1st mountPoint = ', d.mountpoints[0].path);
+            mountPath = d.mountpoints[0].path.toString();
+            console.log('mountpath = ', mountPath);
+
+
+          } catch (e) {
+            deferred.reject(`Error getting mount path for USB drive`);
+          }
+          try {
+            const infoFilePath = path.join(mountPath, infoFile);
+            const txInfo = fs.readFileSync(infoFilePath, 'utf-8');
+            txData = JSON.parse(txInfo.toString());
+          } catch (e) {
+            deferred.reject(`Error reading transaction information file | InfoFile: ${infoFile}`);
+          }
+          try {
             const dataFilePath = path.join(mountPath, dataFile);
 
             var data = fs.readFileSync(dataFilePath, 'utf-8');
 
-            const signedTxPayload = {
+            signedTxPayload = {
               ...txData,
               payload: data.toString()
             };
+          } catch (e) {
+            deferred.reject(`Error reading transaction data file | DataFile: ${dataFile}.`);
+          }
+
+
+
 
             deferred.resolve(signedTxPayload);
-          } catch (e) {
-            deferred.reject('Error reading from USB.');
-          }
+
 
         }
       });

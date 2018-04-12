@@ -6,6 +6,7 @@ import Snackbar from 'material-ui/Snackbar';
 import theme from 'theme';
 import { hideNotification } from 'actions/notification';
 
+
 class Notification extends Component {
 
   handleRequestClose = () => {
@@ -13,7 +14,12 @@ class Notification extends Component {
   };
 
   render() {
-    const style = {};
+    const style = {
+      height: 'auto',
+      lineHeight: '20px',
+      padding: 14,
+      whiteSpace: 'pre-line'
+    };
     const { primary1Color, accent1Color } = theme.palette;
     const { type, message } = this.props;
     if (type === 'warning') {
@@ -26,9 +32,10 @@ class Notification extends Component {
       <Snackbar
         open={!!message}
         message={!!message && message}
-        autoHideDuration={4000}
+        autoHideDuration={5000}
         bodyStyle={style}
         onRequestClose={this.handleRequestClose}
+
       />
     );
   }

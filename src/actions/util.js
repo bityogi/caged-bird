@@ -13,7 +13,8 @@ export const handleError = (error, isFetch = false) => {
       dispatch(alert(key, message));
     } else {
       //Handle all other errors
-      dispatch(showNotification('Error occured', 'warning'));
+      const errorInfo = (error) ? error : 'Error Occured';
+      dispatch(showNotification(errorInfo, 'warning'));
     }
     if (isFetch) {
       dispatch({
