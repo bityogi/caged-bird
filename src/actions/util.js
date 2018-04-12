@@ -11,6 +11,9 @@ export const handleError = (error, isFetch = false) => {
       const key = 'LOG_OUT' //TODO: import this from alertActions instead of hard-coding
       const message = 'Authorization token has expired. Please log in again.'
       dispatch(alert(key, message));
+    } else if (isObject(error)) {
+      const errorInfo = (error.data) ? error.data : 'Error occured';
+      dispatch(showNotification(errorInfo, 'warning'))
     } else {
       //Handle all other errors
       const errorInfo = (error) ? error : 'Error Occured';
@@ -23,4 +26,8 @@ export const handleError = (error, isFetch = false) => {
     }
   }
 
+}
+
+function isObject(obj) {
+  return obj === Object(obj);
 }

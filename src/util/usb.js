@@ -58,7 +58,7 @@ export const getUSBData = () => {
               payload: data.toString()
             };
           } catch (e) {
-            deferred.reject(`Error reading transaction data file | DataFile: ${dataFile}.`);
+            deferred.reject(`Error reading transaction data (hex) file | DataFile: ${dataFile}.`);
           }
 
 
