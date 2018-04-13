@@ -8,6 +8,7 @@ import FlatButton from 'material-ui/FlatButton';
 import { withRouter } from 'react-router-dom';
 import FontIcon from 'material-ui/FontIcon';
 import LinearProgress from 'material-ui/LinearProgress';
+import _ from 'lodash';
 
 import TransactionDetail from 'components/transactionDetail';
 import {
@@ -75,6 +76,21 @@ class Broadcast extends Component {
     this.setState({ requested: true })
   }
 
+  renderErrorDetails() {
+    const { signed } = this.props;
+
+    if (signed.error) {
+      if (signed.error.constructor === Array) {
+        return _.map(signed.error, (e, i) => {
+          return <div key={i}>{`Drive: ${e.driveNumber}. Message: ${e.message}`}</div>;
+        })
+
+      } else {
+        return <div>{signed.error}</div>;
+      }
+    }
+  }
+
   renderSignedTransaction() {
     const { signed, history } = this.props;
     switch (signed.status) {
@@ -93,6 +109,10 @@ class Broadcast extends Component {
         return (
           <div>
             <span style={styles.error}>Error while retrieving data from USB.</span>
+            <br />
+            <div style={styles.error}>
+              Error details: { this.renderErrorDetails() }
+            </div>
             <div>
               Ensure USB is connected and the file exists:
               <span>

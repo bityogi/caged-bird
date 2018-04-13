@@ -875,12 +875,13 @@ exports[`App renders correctly 1`] = `
             "borderRadius": 2,
             "flexGrow": 0,
             "fontFamily": "Roboto, sans-serif",
-            "height": 48,
-            "lineHeight": "48px",
+            "height": "auto",
+            "lineHeight": "20px",
             "maxWidth": 568,
             "minWidth": 288,
             "muiPrepared": true,
-            "padding": "0 24px",
+            "padding": 14,
+            "whiteSpace": "pre-line",
             "width": "auto",
           }
         }

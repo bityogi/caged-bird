@@ -23,11 +23,16 @@ export const getUSBData = () => {
       }
       let usbFound = false;
       console.log('drives found: ', drives);
+      let errors = [];
+      let results = [];
+      let driveNumber = 0;
       _.map(drives, d => {
         if (d.isUSB || !d.isSystem) {
+          driveNumber++;
           let mountPath;
           let txData;
           let signedTxPayload;
+
           try {
             console.log('JSON USB (non-system) drive: ', JSON.stringify(d));
 
@@ -39,14 +44,16 @@ export const getUSBData = () => {
 
 
           } catch (e) {
-            deferred.reject(`Error getting mount path for USB drive`);
+            errors.push({ driveNumber, message: 'Error getting mount path for USB drive', error: e });
+            // deferred.reject(`Error getting mount path for USB drive`);
           }
           try {
             const infoFilePath = path.join(mountPath, infoFile);
             const txInfo = fs.readFileSync(infoFilePath, 'utf-8');
             txData = JSON.parse(txInfo.toString());
           } catch (e) {
-            deferred.reject(`Error reading transaction information file | InfoFile: ${infoFile}`);
+            errors.push({ driveNumber, message: `Error reading transaction information file | InfoFile: ${infoFile}`, error: e });
+            // deferred.reject();
           }
           try {
             const dataFilePath = path.join(mountPath, dataFile);
@@ -57,14 +64,13 @@ export const getUSBData = () => {
               ...txData,
               payload: data.toString()
             };
+            results.push({ payload: signedTxPayload });
           } catch (e) {
-            deferred.reject(`Error reading transaction data (hex) file | DataFile: ${dataFile}.`);
+            errors.push({ driveNumber, message: `Error reading transaction data (hex) file | DataFile: ${dataFile}.`, error: e });
+            // deferred.reject();
           }
 
-
-
-
-            deferred.resolve(signedTxPayload);
+          // deferred.resolve(signedTxPayload);
 
 
         }
@@ -72,8 +78,11 @@ export const getUSBData = () => {
 
       if (!usbFound) {
         deferred.reject('No USB Found');
+      } else if (results.length > 0 ) {
+        deferred.resolve(results[0].payload);
+      } else if (errors.length > 0) {
+        deferred.reject(errors);
       }
-
     })
   } catch (e) {
     console.log(e);

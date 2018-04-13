@@ -5,6 +5,7 @@ import { getUSBData } from 'util/usb';
 import {
   BROADCAST_DETAIL,
   BROADCAST_STATUS,
+  BROADCAST_ERROR,
   FETCH_START,
   FETCH_END,
 } from './types';
@@ -62,6 +63,10 @@ export const signedTransaction = () => {
         dispatch({
           type: BROADCAST_STATUS,
           payload: RETRIEVE_ERROR
+        });
+        dispatch({
+          type: BROADCAST_ERROR,
+          payload: error
         });
       });
 
