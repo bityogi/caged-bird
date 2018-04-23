@@ -54,7 +54,7 @@ export const signedTransaction = () => {
           });
 
           dispatch({
-              type: FETCH_END
+            type: FETCH_END
           });
       })
       .catch(error => {
