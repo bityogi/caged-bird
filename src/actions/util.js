@@ -15,7 +15,7 @@ export const handleError = (error, isFetch = false) => {
       const errorInfo = (error.data) ? error.data : 'Error occured';
       if (isObject(errorInfo)) {
         console.log('Error: Error Object: ', error.data);
-        if (errorInfo.error && errofInfo.error.message) {
+        if (errorInfo.error && errorInfo.error.message) {
           dispatch(showNotification(errorInfo.error.message, 'warning'));
         } else {
           dispatch(showNotification('Unknown exception', 'warning'));
