@@ -13,7 +13,12 @@ export const handleError = (error, isFetch = false) => {
       dispatch(alert(key, message));
     } else if (isObject(error)) {
       const errorInfo = (error.data) ? error.data : 'Error occured';
-      dispatch(showNotification(errorInfo, 'warning'))
+      if (isObject(errorInfo)) {
+        dispatch(showNotification('Unknown exception', 'warning'));
+      } else {
+        dispatch(showNotification(errorInfo, 'warning'));
+      }
+
     } else {
       //Handle all other errors
       const errorInfo = (error) ? error : 'Error Occured';
