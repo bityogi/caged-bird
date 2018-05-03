@@ -14,12 +14,13 @@ export const handleError = (error, isFetch = false) => {
     } else if (isObject(error)) {
       const errorInfo = (error.data) ? error.data : 'Error occured';
       if (isObject(errorInfo)) {
+        console.log('Error: Error Object: ', error.data);
         if (errorInfo.message) {
           dispatch(showNotification(errorInfo.message, 'warning'));
         } else {
           dispatch(showNotification('Unknown exception', 'warning'));
         }
-        
+
       } else {
         dispatch(showNotification(errorInfo, 'warning'));
       }
