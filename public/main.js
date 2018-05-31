@@ -7,6 +7,10 @@ const BrowserWindow = electron.BrowserWindow
 const path = require('path')
 const url = require('url')
 
+const localShortcut = require('electron-localshortcut');
+const devToolsOptions = {};
+devToolsOptions.mode = true;
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
@@ -34,6 +38,13 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null
   })
+  localShortcut.register('F12', openDevTools);
+}
+
+function openDevTools(win = BrowserWindow.getFocusedWindow()) {
+	if (win) {
+		win.webContents.openDevTools(devToolsOptions);
+	}
 }
 
 // This method will be called when Electron has finished
