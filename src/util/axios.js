@@ -3,9 +3,16 @@ import _ from 'lodash';
 
 import store from 'store';
 
+const fs = window.require('electron').remote.require('fs');
+
+const configFile = process.env.REACT_APP_CONFIG_PATH; // /var/Hot/config.json
+console.log('configFile: ', configFile);
+const config = JSON.parse(fs.readFileSync(configFile, 'utf-8'));
+const bbapi = config.BluebirdAPI;
+
 const authClient = () => {
   const defaultOptions = {
-    baseURL: process.env.REACT_APP_BLUEBIRD_API,
+    baseURL: bbapi,
     headers: {
       'Content-Type': 'application/json'
     }
@@ -31,7 +38,7 @@ const authClient = () => {
 
 
 let client = axios.create({
-  baseURL: process.env.REACT_APP_BLUEBIRD_API
+  baseURL: bbapi
 });
 
 client.defaults.headers.common['Content-Type'] = 'application/json';
