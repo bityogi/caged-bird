@@ -1,5 +1,5 @@
 
-import { authClient } from 'util/axios';
+import { authClient } from 'util/axiosClient';
 import { getUSBData } from 'util/usb';
 
 import {

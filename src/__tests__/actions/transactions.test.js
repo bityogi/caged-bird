@@ -1,10 +1,12 @@
+jest.mock('fs');
+jest.mock('util/axiosClient');
 
 import { Thunk } from 'redux-testkit';
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
 import MockAdapter from 'axios-mock-adapter';
 
-import { client } from 'util/axios';
+import { client } from 'util/axiosClient';
 import * as actions from 'actions';
 import * as types from 'actions/types';
 
@@ -49,9 +51,9 @@ describe('Transactions actions', () => {
     mock.reset();
   });
 
-  after(() => {
-    mock.restore();
-  });
+  // after(() => {
+  //   mock.restore();
+  // });
 
   it('creates the right actions for pendingTransactions', async () => {
 

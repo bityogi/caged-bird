@@ -1,17 +1,20 @@
 jest.mock('util/usb');
+jest.mock('fs');
+jest.mock('util/axiosClient');
 
 import { Thunk } from 'redux-testkit';
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
+import { client } from 'util/axiosClient';
 import MockAdapter from 'axios-mock-adapter';
 
-import { client } from 'util/axios';
+
 import * as actions from 'actions';
 import * as types from 'actions/types';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
-// const mock = new MockAdapter(client);
+const mock = new MockAdapter(client);
 
 
 
@@ -56,11 +59,11 @@ describe('Broadcast actions', () => {
   }
 
   let store;
-  let mock;
+  // let mock;
 
-  before(() => {
-    mock = new MockAdapter(client);
-  });
+  // before(() => {
+  //   mock = new MockAdapter(client);
+  // });
 
   beforeEach(() => {
     store = mockStore(initialState);
@@ -71,9 +74,9 @@ describe('Broadcast actions', () => {
     mock.reset();
   });
 
-  after(() => {
-    mock.restore();
-  });
+  // after(() => {
+  //   mock.restore();
+  // });
 
   it('creates the right actions for signedTransaction', () => {
     return store.dispatch(actions.signedTransaction())

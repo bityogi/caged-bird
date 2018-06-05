@@ -1,5 +1,5 @@
 
-import { client } from 'util/axios';
+import { client } from 'util/axiosClient';
 
 import {
   LOGIN,

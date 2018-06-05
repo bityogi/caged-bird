@@ -1,5 +1,5 @@
 import { writeToUSB } from 'util/usb';
-import { authClient } from 'util/axios';
+import { authClient } from 'util/axiosClient';
 
 import {
   PENDING_TRANSACTIONS,

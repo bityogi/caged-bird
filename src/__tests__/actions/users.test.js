@@ -1,31 +1,34 @@
+jest.mock('fs');
+jest.mock('util/axiosClient');
+
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
 import { Thunk } from 'redux-testkit';
 
-import { client } from 'util/axios';
+import { client } from 'util/axiosClient';
 import * as actions from 'actions';
 import * as types from 'actions/types';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
-// const mock = new MockAdapter(client);
+const mock = new MockAdapter(client);
 
 
 describe('User actions', () => {
-  let mock;
+  // let mock;
 
-  before(() => {
-    mock = new MockAdapter(client);
-  });
+  // before(() => {
+  //   mock = new MockAdapter(client);
+  // });
 
   afterEach(() => {
     mock.reset();
   });
 
-  after(() => {
-    mock.restore();
-  });
+  // after(() => {
+  //   mock.restore();
+  // });
 
 
   const store = mockStore({ users: {

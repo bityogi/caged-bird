@@ -1,4 +1,4 @@
-jest.mock('util/axios');
+jest.mock('util/axiosClient');
 
 import React from 'react';
 import renderer from 'react-test-renderer';

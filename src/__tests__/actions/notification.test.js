@@ -1,4 +1,4 @@
-jest.mock('util/axios');
+jest.mock('util/axiosClient');
 
 import * as actions from 'actions';
 import * as types from 'actions/types';
