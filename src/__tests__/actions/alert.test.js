@@ -1,3 +1,5 @@
+jest.mock('util/axios');
+
 import * as actions from 'actions';
 import * as types from 'actions/types';
 

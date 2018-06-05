@@ -1,3 +1,5 @@
+jest.mock('fs');
+
 import { Thunk } from 'redux-testkit';
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
