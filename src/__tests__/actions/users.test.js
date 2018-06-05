@@ -9,14 +9,24 @@ import * as types from 'actions/types';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
-const mock = new MockAdapter(client);
+// const mock = new MockAdapter(client);
 
 
 describe('User actions', () => {
-  afterEach(() => {
-    mock.reset()
-    // mock.restore()
+  let mock;
+
+  before(() => {
+    mock = new MockAdapter(client);
   });
+
+  afterEach(() => {
+    mock.reset();
+  });
+
+  after(() => {
+    mock.restore();
+  });
+
 
   const store = mockStore({ users: {
       loading: false,

@@ -1,4 +1,3 @@
-jest.mock('fs');
 
 import { Thunk } from 'redux-testkit';
 import thunk from 'redux-thunk';
@@ -47,7 +46,11 @@ describe('Transactions actions', () => {
     store = mockStore(initialState);
   });
   afterEach(() => {
-    mock.reset()
+    mock.reset();
+  });
+
+  after(() => {
+    mock.restore();
   });
 
   it('creates the right actions for pendingTransactions', async () => {

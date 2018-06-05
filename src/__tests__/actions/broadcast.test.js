@@ -1,4 +1,4 @@
-jest.mock('util/axios');
+jest.mock('util/usb');
 
 import { Thunk } from 'redux-testkit';
 import thunk from 'redux-thunk';
@@ -11,9 +11,9 @@ import * as types from 'actions/types';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
-const mock = new MockAdapter(client);
+// const mock = new MockAdapter(client);
 
-jest.mock('util/usb');
+
 
 describe('Broadcast actions', () => {
   const MOCK_DRIVES =
@@ -56,6 +56,11 @@ describe('Broadcast actions', () => {
   }
 
   let store;
+  let mock;
+
+  before(() => {
+    mock = new MockAdapter(client);
+  });
 
   beforeEach(() => {
     store = mockStore(initialState);
@@ -63,7 +68,11 @@ describe('Broadcast actions', () => {
   });
 
   afterEach(() => {
-    mock.reset()
+    mock.reset();
+  });
+
+  after(() => {
+    mock.restore();
   });
 
   it('creates the right actions for signedTransaction', () => {
