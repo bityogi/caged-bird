@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "bitcoinjs-lib": "^3.3.2",
     "concurrently": "^3.5.1",
     "drivelist": "^6.1.1",
     "electron-is-dev": "^0.3.0",

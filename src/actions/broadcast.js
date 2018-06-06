@@ -21,6 +21,7 @@ import {
 
 // import { showNotification } from './notification';
 import { handleError } from './util';
+import { decodeTransaction } from 'util/wallet';
 
 
 export const signedTransaction = () => {
@@ -39,23 +40,30 @@ export const signedTransaction = () => {
     return getUSBData()
       .then(data => {
         console.log('response from getUSBData: ', data);
+        
+        decodeTransaction(data.ticker, data.payload)
+          .then((tx) => {
+            dispatch({
+              type: BROADCAST_DETAIL,
+              payload: {
+                loading: false,
+                data: data
+              }
+            });
+  
+            dispatch({
+              type: BROADCAST_STATUS,
+              payload: RETRIEVED
+            });
+  
+            dispatch({
+              type: FETCH_END
+            });
+          })
+          .catch(error => {
 
-        dispatch({
-            type: BROADCAST_DETAIL,
-            payload: {
-              loading: false,
-              data: data
-            }
-          });
-
-          dispatch({
-            type: BROADCAST_STATUS,
-            payload: RETRIEVED
-          });
-
-          dispatch({
-            type: FETCH_END
-          });
+          })
+        
       })
       .catch(error => {
         console.error('Error retrieving USB data: ', error);
