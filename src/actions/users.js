@@ -12,7 +12,7 @@ import { history } from 'store';
 import { showNotification } from './notification';
 
 export const login = (credentials) => {
-  console.log('login with credentials: ', credentials);
+  console.log('login with credentials: ', typeof(credentials));
 
   return dispatch => {
     dispatch({
