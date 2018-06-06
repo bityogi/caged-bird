@@ -1,6 +1,7 @@
 
 import { authClient } from 'util/axiosClient';
 import { getUSBData } from 'util/usb';
+import { decodeTransaction } from 'util/wallet';
 
 import {
   BROADCAST_DETAIL,
@@ -21,8 +22,6 @@ import {
 
 // import { showNotification } from './notification';
 import { handleError } from './util';
-import { decodeTransaction } from 'util/wallet';
-
 
 export const signedTransaction = () => {
   console.log('get signed transaction (from USB)');
@@ -41,7 +40,7 @@ export const signedTransaction = () => {
       .then(data => {
         console.log('response from getUSBData: ', data);
         
-        decodeTransaction(data.ticker, data.payload)
+        return decodeTransaction(data.ticker, data.payload)
           .then((tx) => {
             dispatch({
               type: BROADCAST_DETAIL,
