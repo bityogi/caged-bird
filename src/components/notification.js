@@ -32,7 +32,7 @@ class Notification extends Component {
       <Snackbar
         open={!!message}
         message={!!message && message}
-        autoHideDuration={5000}
+        autoHideDuration={10000}
         bodyStyle={style}
         onRequestClose={this.handleRequestClose}
 
