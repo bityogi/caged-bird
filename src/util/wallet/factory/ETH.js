@@ -13,7 +13,9 @@ export default class ETH extends Wallet {
         let deferred = Q.defer();
         
         try {
-            const tx = txDecoder.decodeTx(hex);
+            const rawHex = `0x${hex}`; //Ensure that hex is prefixed with '0x'
+            
+            const tx = txDecoder.decodeTx(rawHex);
             deferred.resolve(tx);
         } catch (error) {
             console.error('Error decoding tx: ', error);

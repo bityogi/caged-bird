@@ -44,11 +44,16 @@ export const signedTransaction = () => {
         
         return decodeTransaction(data.ticker, rawTx)
           .then((tx) => {
+            console.log('decoded r: ', tx.r);
+            console.log('decoded s: ', tx.s);
+            console.log('decoded to: ', tx.to);
+            console.log('decoded v: ', tx.v);
+            console.log('decoded value: ', tx.value.toString());
             dispatch({
               type: BROADCAST_DETAIL,
               payload: {
                 loading: false,
-                data: data
+                data: { ...data, decodedTx: tx }
               }
             });
   
