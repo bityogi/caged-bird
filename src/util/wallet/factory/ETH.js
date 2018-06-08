@@ -16,6 +16,7 @@ export default class ETH extends Wallet {
             const tx = txDecoder.decodeTx(hex);
             deferred.resolve(tx);
         } catch (error) {
+            console.error('Error decoding tx: ', error);
             deferred.reject({ message: 'Error decoding transaction', error: error });
         } finally {
             return deferred.promise;

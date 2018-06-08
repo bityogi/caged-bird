@@ -34,7 +34,7 @@
     "react-start": "BROWSER=none react-scripts start",
     "wait-dev": "wait-on $ELECTRON_START_URL",
     "electron-dev": "run-s wait-dev electron-start",
-    "start": "cross-env ELECTRON_START_URL=http://localhost:3000/ run-p react-start electron-dev",
+    "start": "cross-env NODE_PATH=./src ELECTRON_START_URL=http://localhost:3000/ run-p react-start electron-dev",
     "build": "cross-env NODE_PATH=./src react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "test:teamcity": "react-scripts test --env=jsdom --testResultsProcessor=jest-teamcity-reporter",
