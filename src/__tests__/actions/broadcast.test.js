@@ -1,6 +1,7 @@
 jest.mock('util/usb');
 jest.mock('fs');
 jest.mock('util/axiosClient');
+jest.mock('util/wallet');
 
 import { Thunk } from 'redux-testkit';
 import thunk from 'redux-thunk';
