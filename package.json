@@ -25,6 +25,7 @@
     "redux-form": "^7.3.0",
     "redux-form-material-ui": "^4.3.3",
     "redux-thunk": "^2.2.0",
+    "ripple-binary-codec": "^0.1.13",
     "wait-on": "^2.1.0"
   },
   "main": "./public/main.js",
