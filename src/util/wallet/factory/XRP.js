@@ -9,9 +9,9 @@ export default class XRP extends Wallet {
         let deferred = Q.defer();
         
         try {
-            const rawHex = hex.substring(64);
-            const tx = decode(rawHex);
-            deferred.resolve(tx);
+            // const rawHex = hex.substring(64);
+            // const tx = decode(rawHex);
+            deferred.resolve();
         } catch (error) {
             console.error('Error decoding tx: ', error);
             deferred.reject({ message: 'Error decoding transaction', error: error });
