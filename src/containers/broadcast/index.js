@@ -11,6 +11,8 @@ import LinearProgress from 'material-ui/LinearProgress';
 import _ from 'lodash';
 
 import TransactionDetail from 'components/transactionDetail';
+import DecodedTransaction from './decodedTransaction';
+
 import {
   signedTransaction,
   broadcastTransaction,
@@ -39,7 +41,16 @@ const styles = {
   },
   error: {
     color: '#FF0000'
-  }
+  },
+  container: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  component: {
+    flex: 1,
+    margin: 3,
+  } 
 }
 class Broadcast extends Component {
 
@@ -127,21 +138,28 @@ class Broadcast extends Component {
         )
       case RETRIEVED:
         return (
-          <Card>
-            <TransactionDetail detail={signed.broadcast} />
-            <CardActions>
-              <FlatButton
-                label="broadcast"
-                primary={true}
-                keyboardFocused={true}
-                onClick={this.handleTransactionBroadcast.bind(this)}
-              />,
-              <FlatButton
-                label="Cancel"
-                onClick={this.handleCancelBroadcast.bind(this)}
-              />,
-            </CardActions>
-          </Card>
+          <div style={styles.container}>
+            <Card style={styles.component}>
+              <TransactionDetail detail={signed.broadcast} />
+              <CardActions>
+                <FlatButton
+                  label="broadcast"
+                  primary={true}
+                  keyboardFocused={true}
+                  onClick={this.handleTransactionBroadcast.bind(this)}
+                />,
+                <FlatButton
+                  label="Cancel"
+                  onClick={this.handleCancelBroadcast.bind(this)}
+                />,
+              </CardActions>
+            </Card>
+            <Card style={styles.component}>
+              <CardTitle>Decoded Transaction</CardTitle>
+              <DecodedTransaction detail={signed.broadcast} />
+            </Card>
+          </div>
+          
 
         );
        case SUBMITTING:
