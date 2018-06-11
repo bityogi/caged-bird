@@ -155,7 +155,7 @@ class Broadcast extends Component {
               </CardActions>
             </Card>
             <Card style={styles.component}>
-              <CardTitle>Decoded Transaction</CardTitle>
+              <CardTitle title={'Decoded Transaction'} />
               <DecodedTransaction detail={signed.broadcast} />
             </Card>
           </div>
