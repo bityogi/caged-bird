@@ -40,7 +40,7 @@ export const signedTransaction = () => {
       .then(data => {
         console.log('response from getUSBData: ', data);
         let rawTx = data.payload.replace(/(\r\n\t|\n|\r\t)/gm, '');
-        rawTx = rawTx.replace(/\"/g, '');
+        rawTx = rawTx.replace(/"/g, '');
         
         return decodeTransaction(data.ticker, rawTx)
           .then((tx) => {

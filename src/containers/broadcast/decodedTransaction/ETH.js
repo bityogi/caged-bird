@@ -4,6 +4,7 @@ import ActionInfo from 'material-ui/svg-icons/action/info';
 import FontIcon from 'material-ui/FontIcon';
 
 import theme from 'theme';
+const { palette: { primary1Color } } = theme;
 
 const styles = {
     icon: {
@@ -19,7 +20,7 @@ const styles = {
     }
   }
 
-const { palette: { primary1Color } } = theme;
+
 
 class ETH extends Component {
 

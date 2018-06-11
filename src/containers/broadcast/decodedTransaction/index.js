@@ -30,11 +30,7 @@ class DecodedTransaction extends Component {
                 );
                     
         }
-        return (
-            <span>
-                Decoded Transaction Details
-            </span>
-        )
+        
     }
 }
 
