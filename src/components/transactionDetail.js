@@ -108,7 +108,7 @@ export default ({ detail }) => {
           leftIcon={<FontIcon className="material-icons" style={styles.icon}>access_time</FontIcon>}
         />
         {
-          detail.ticker === 'XRP' && (
+          detail.data.ticker === 'XRP' && (
             <ListItem 
               primaryText="Destination Tag"
               secondaryText={detail.data.testinationTag}
