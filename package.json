@@ -27,7 +27,6 @@
     "redux-thunk": "^2.2.0",
     "ripple-binary-codec": "^0.1.13",
     "safe-buffer": "^5.1.2",
-    "tx-builder": "^0.15.0",
     "wait-on": "^2.1.0"
   },
   "main": "./public/main.js",
