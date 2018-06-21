@@ -39,6 +39,10 @@ export const signedTransaction = () => {
     return getUSBData()
       .then(data => {
         console.log('response from getUSBData: ', data);
+        // ERC20 token? force to ETH -- This code needs to be cleaned up to get this data correctly from Bluebird rather than forcing it in here. (Govind)
+        if(data.coinContract !== null && data.coinContract.length === 42) {
+          data.ticker = 'ETH'
+        };
         let rawTx = data.payload.replace(/(\r\n\t|\n|\r\t)/gm, '');
         rawTx = rawTx.replace(/"/g, '');
         
