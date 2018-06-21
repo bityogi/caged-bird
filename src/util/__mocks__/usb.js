@@ -18,7 +18,8 @@ export const getUSBData = () => {
     "fee" : 1.44544,
     "memo" : "This transaction is signed and ready to be broadcast",
     "generatedOn" : "2018-03-07T09:18:26-05:00",
-    "payload": "hellojjjlsdfuosfdjklsjflsjfdsjdflsjafd"
+    "payload": "hellojjjlsdfuosfdjklsjflsjfdsjdflsjafd",
+    "coinContract": null
   };
 
   deferred.resolve(signedTxPayload);
