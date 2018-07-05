@@ -40,6 +40,12 @@ class Landing extends Component {
             onClick={() => history.push('/broadcast')}
           />
           <RaisedButton
+            label="Import Cold Wallets"
+            style={style}
+            secondary={true}
+            onClick={() => history.push('/import')}
+          />
+          <RaisedButton
             label="Log Out"
             style={style}
             icon={<EjectAction />}
