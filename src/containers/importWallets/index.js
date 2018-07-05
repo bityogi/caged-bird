@@ -1,25 +1,28 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { importWallets } from '../../actions/importWallets';
 
-const ImportWallets = () => {
-
-    return (
-        <div>
-            <h4>Cold Wallet Import</h4>
-            <div>Select one or more Cold Wallet files</div>
-            <input
-                id="file"
-                multiple
-                type="file"
-                name="file"
-            ></input>
-        </div>
-    )
+class ImportWallets extends Component {
+    render() {
+        return (
+            <div>
+                <h4>Cold Wallet Import</h4>
+                <div>Select one or more Cold Wallet files</div>
+                <input
+                    id="file"
+                    multiple
+                    type="file"
+                    name="file"
+                    onChange={() => this.props.importWallets()}
+                ></input>
+            </div>
+        )
+    }
 }
 
 const mapStateToProps = state => {
     console.log('currentState', state);
-    return { importedWallets : state.importedWallets };
+    return { importedWallets: state.importedWallets };
 }
 
-export default connect(mapStateToProps)(ImportWallets);
+export default connect(mapStateToProps, { importWallets })(ImportWallets);
