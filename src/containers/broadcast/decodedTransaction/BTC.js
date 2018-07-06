@@ -7,6 +7,7 @@ import ActionInfo from 'material-ui/svg-icons/action/info';
 import Divider from 'material-ui/Divider';
 
 import theme from 'theme';
+import { scientificToDecimal } from 'util/format';
 
 const { palette: { primary1Color } } = theme;
 
@@ -26,17 +27,26 @@ const styles = {
 
 class BTC extends Component {
 
-    renderDestinationAddress(tx) {
+    renderDestinationAddress(tx, metadata) {
+        let network;
+        if (metadata.testnet === true) {
+            network = bitcoin.networks.testnet;
+        } else {
+            network = bitcoin.networks.mainnet
+        }
 
         const addresses = _.map(tx.outs, (out, index) => {
             const pubKey = Buffer.from(out.script, 3, 20);
-            const address = bitcoin.address.fromOutputScript(pubKey);
+            const address = bitcoin.address.fromOutputScript(pubKey, network);
+            const amount = scientificToDecimal(out.value / 100000000);
+            console.log('amount: ', amount);
+            console.log('amount cast to Number:', Number(amount));
             console.log('btc to address: ', address);
             return (
                 <ListItem
                     key={index}
                     primaryText={`To :${address}`}
-                    secondaryText={out.value}
+                    secondaryText={`${amount} BTC`}
                     innerDivStyle={styles.listItems}
                     leftIcon={<ActionInfo style={styles.icon} color={primary1Color} />}
                 />
@@ -49,14 +59,14 @@ class BTC extends Component {
     }
 
     render() {
-        const { decodedTx } = this.props;
+        const { decodedTx, metadata } = this.props;
         console.log('decodedTX (BTC) : ', decodedTx);
-        
+        console.log('metadata (BTC): ', metadata);
         return(
             <div>
                 <div>
                     <List>
-                        {this.renderDestinationAddress(decodedTx)}
+                        {this.renderDestinationAddress(decodedTx, metadata)}
                     </List>
                 </div>
                 <Divider />
