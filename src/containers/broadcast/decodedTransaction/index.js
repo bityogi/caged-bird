@@ -8,8 +8,10 @@ class DecodedTransaction extends Component {
 
     render() {
         const { detail } = this.props;
-        const { decodedTx, ticker } = detail.data;
+        const { decodedTx, ticker, unsignedInfo } = detail.data;
         console.log('broadcast detail: ', detail);
+        console.log('unsignedInfo: ', unsignedInfo);
+
         switch(ticker) {
             case 'ETH':
             case 'ETC':
@@ -22,11 +24,11 @@ class DecodedTransaction extends Component {
                 );
             case 'BTC':
                 return (
-                    <BTC decodedTx={decodedTx} />
+                    <BTC decodedTx={decodedTx} metadata={unsignedInfo} />
                 );
             default:
                 return (
-                    <BTC decodedTx={decodedTx} />
+                    <BTC decodedTx={decodedTx} metadata={unsignedInfo} />
                 );
                     
         }

@@ -17,6 +17,7 @@
     "q": "^1.5.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-json-view": "^1.17.1",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^4.0.8",
@@ -27,7 +28,6 @@
     "redux-thunk": "^2.2.0",
     "ripple-binary-codec": "^0.1.13",
     "safe-buffer": "^5.1.2",
-    "tx-builder": "^0.15.0",
     "wait-on": "^2.1.0"
   },
   "main": "./public/main.js",

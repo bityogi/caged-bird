@@ -107,6 +107,16 @@ export default ({ detail }) => {
           innerDivStyle={styles.listItems}
           leftIcon={<FontIcon className="material-icons" style={styles.icon}>access_time</FontIcon>}
         />
+        {
+          detail.data.ticker === 'XRP' && (
+            <ListItem 
+              primaryText="Destination Tag"
+              secondaryText={detail.data.testinationTag}
+              innerDivStyle={styles.listItems}
+              leftIcon={<FontIcon className="material-icons" style={styles.icon}>trending_flat</FontIcon>}
+            />
+          )
+        }
       </List>
     )
   }

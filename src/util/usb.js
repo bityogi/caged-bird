@@ -13,6 +13,7 @@ export const getUSBData = () => {
   console.log('getUSBData start');
   const infoFile = process.env.REACT_APP_TX_FILENAME;
   const dataFile = process.env.REACT_APP_SIGNED_FILENAME;
+  const unsignedInfoFile = process.env.REACT_APP_UNSIGNED_FILENAME;
 
   try {
 
@@ -64,10 +65,22 @@ export const getUSBData = () => {
               ...txData,
               payload: data.toString()
             };
-            results.push({ payload: signedTxPayload });
+           
           } catch (e) {
             errors.push({ driveNumber, message: `Error reading transaction data (hex) file | DataFile: ${dataFile}.`, error: e });
             // deferred.reject();
+          }
+          try {
+            const unsignedInfoFilePath = path.join(mountPath, unsignedInfoFile);
+            const unsignedInfo = fs.readFileSync(unsignedInfoFilePath, 'utf-8');
+            signedTxPayload = {
+              ...signedTxPayload,
+              unsignedInfo: JSON.parse(unsignedInfo)
+            }
+            results.push({ payload: signedTxPayload });
+
+          } catch (e) {
+            errors.push({ driveNumber, message: `Error reading unsigned tx data file | DataFile: ${unsignedInfoFile}.`, error: e });
           }
 
           // deferred.resolve(signedTxPayload);

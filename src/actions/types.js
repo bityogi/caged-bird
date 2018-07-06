@@ -21,3 +21,5 @@ export const BROADCAST_ERROR = 'BROADCAST_ERROR';
 
 export const ALERT = 'ALERT';
 export const CLEAR_ALERT = 'CLEAR_ALERT';
+
+export const IMPORT_WALLETS_SUCCESS = 'IMPORT_WALLETS';
