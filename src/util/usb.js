@@ -172,3 +172,55 @@ export const writeInfoToUSB = (data) => {
 
   return deferred.promise;
 }
+
+//getUSBMountPath: helper method used by usb.js methods to get the mounted path of the first USB (or non-system) it detects.
+const getUSBMountPath = () => {
+  let deferred = Q.defer();
+
+  try {
+    drivelist.list((error, drives) => {
+      if (error) {
+        console.error('Error reading drive list: ', error);
+        deferred.reject(error);
+      }
+      let usbFound = false;
+      console.log('drives found: ', drives);
+      let errors = [];
+      let results = [];
+
+      _.map(drives, d => {
+        if (d.isUSB || !d.isSystem) {
+          let mountPath;
+
+          try {
+            console.log('JSON USB/Non-System drive: ', JSON.stringify(d));
+
+            usbFound = true;
+            console.log('mountPoints = ', d.mountpoints);
+            console.log('1st mountPoint = ', d.mountpoints[0].path);
+            mountPath = d.mountpoints[0].path.toString();
+            console.log('mountpath = ', mountPath);
+            results.push({ mountPath });
+          } catch (e) {
+            errors.push({ message: 'Error getting mount path for USB drive', error: e });
+          }
+
+        }
+      });
+
+      if (!usbFound) {
+        deferred.reject('No USB Found');
+      } else if (results.length > 0 ) {
+        deferred.resolve(results[0]);
+      } else if (errors.length > 0) {
+        deferred.reject(errors);
+      }
+    })
+  } catch (e) {
+    console.error('Error reading drrive list: ', e);
+    deferred.reject(e);
+  } finally {
+    return deferred.promise;
+  }
+
+}
