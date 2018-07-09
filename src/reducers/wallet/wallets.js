@@ -2,9 +2,7 @@ import {
     IMPORT_WALLETS_SUCCESS
 } from 'actions/types';
 
-const initialState = {
-    importedWallets: [{}, {}, {}]
-}
+const initialState = [];
 
 export default function importWalletsReducer(state = initialState, action) {
     switch (action.type) {

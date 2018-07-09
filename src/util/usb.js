@@ -173,6 +173,31 @@ export const writeInfoToUSB = (data) => {
   return deferred.promise;
 }
 
+export const getSeedName = () => {
+  let deferred = Q.defer();
+
+  try {
+    const seedFileName = process.env.REACT_APP_SEED_FILENAME;
+    console.log('READING -> seedFile: ', seedFileName);
+
+    getUSBMountPath()
+      .then(mountInfo => {
+        const filePath = path.join(mountInfo.mountPath, seedFileName);
+        
+        fs.readFile(filePath, 'utf-8', (err, seed) => {
+          if (err) {
+            deferred.reject(err);
+          }
+          deferred.resolve(seed);
+        });
+      })
+  } catch (error) {
+    
+  } finally {
+    return deferred.promise;
+  }
+}
+
 //getUSBMountPath: helper method used by usb.js methods to get the mounted path of the first USB (or non-system) it detects.
 const getUSBMountPath = () => {
   let deferred = Q.defer();

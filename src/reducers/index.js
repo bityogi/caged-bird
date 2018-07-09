@@ -7,7 +7,7 @@ import transactionsReducer from './transactions';
 import transactionReducer from './transaction';
 import adminReducer from './admin';
 import signedReducer from './signed';
-import importWalletsReducer from './importWallets';
+import walletsReducer from './wallet';
 
 export default combineReducers({
   form: formReducer,
@@ -17,5 +17,5 @@ export default combineReducers({
   transactions: transactionsReducer,
   transaction: transactionReducer,
   signed: signedReducer,
-  walletsReducer: importWalletsReducer
+  wallet: walletsReducer
 });
