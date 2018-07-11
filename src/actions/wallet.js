@@ -1,6 +1,6 @@
 
 import {
-  IMPORT_WALLETS_SUCCESS,
+  SET_WALLET_FILES,
   FETCH_START,
   FETCH_END,
   FETCHING_SEED,
@@ -12,8 +12,11 @@ import {
   getSeedName
 } from 'util/usb';
 
-export const importWallets = () => {
-  return { type: IMPORT_WALLETS_SUCCESS, payload: [{}, {}, {}, {}] }
+export const importWallets = (files) => {
+  return { 
+    type: SET_WALLET_FILES, 
+    payload: files 
+  }
 }
 
 export const getSeed = () => {

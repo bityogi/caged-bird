@@ -34,7 +34,7 @@ class ImportWallets extends Component {
     }
      
     render() {
-        const { seed } = this.props.wallet;
+        const { seed, wallets } = this.props.wallet;
         const validSeed = (seed.loading === false) && (seed.seed) ? true : false;
         return (
             <Card>
@@ -58,7 +58,10 @@ class ImportWallets extends Component {
                             </Paper>
                         )}
                         
-                        <ImportForm onSubmit={this.handleImportWallet.bind(this)} />
+                        <ImportForm 
+                            onSubmit={this.handleImportWallet.bind(this)}
+                            wallets={wallets}
+                        />
                         
                     </div>
                 </CardText>
@@ -72,11 +75,11 @@ class ImportWallets extends Component {
 const mapDispatchToProps = dispatch => bindActionCreators({
     getSeed,
     importWallets
-  }, dispatch)
+}, dispatch)
   
-  const mapStateToProps = (state) => ({
+const mapStateToProps = (state) => ({
     wallet: state.wallet,
-  })
+})
   
 
 export default connect(mapStateToProps, mapDispatchToProps)(ImportWallets);

@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import RaisedButton from 'material-ui/RaisedButton';
+// import { change as changeFieldValue } from 'redux-form';
+
+import { 
+    importWallets
+} from 'actions';
 
 const styles = {
     
@@ -18,8 +25,9 @@ class WalletFiles extends Component {
     onChange(e) {
         console.log('onChange called: ', e.target.files);
 
-        const { input : { onChange } } = this.props;
-        onChange(e.target.files);
+        //TODO: Get these values as part of props
+        this.props.importWallets(e.target.files);
+        // onChange(e.target.files);
     }
 
     render() {
@@ -36,6 +44,7 @@ class WalletFiles extends Component {
                     type="file"
                     onChange={this.onChange}
                     multiple
+                    style={{ display: 'none' }}
                     
                 />
             </RaisedButton>
@@ -45,4 +54,9 @@ class WalletFiles extends Component {
     }
 }
 
-export default WalletFiles;
+const mapDispatchToProps = dispatch => bindActionCreators({
+    importWallets
+}, dispatch)
+  
+
+export default connect(null, mapDispatchToProps)(WalletFiles);
