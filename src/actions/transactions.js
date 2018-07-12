@@ -1,4 +1,4 @@
-import { writeToUSB } from 'util/usb';
+import { writeToUSB, writeInfoToUSB } from 'util/usb';
 import { authClient } from 'util/axiosClient';
 
 import {
@@ -23,7 +23,7 @@ import {
 
 import { showNotification } from './notification';
 import { handleError } from './util';
-import { writeInfoToUSB } from '../util/usb';
+
 
 
 export const pendingTransactions = () => {
@@ -118,60 +118,62 @@ export const transactionExecute = (transaction) => {
       }
     });
 
-    return authClient().patch(`transactions/${transaction.transactionId}/unsigned`, {})
-      .then(response => {
-        console.log('response from transaction-execution: ', response);
+    return authClient()
+      .patch(`transactions/${transaction.transactionId}/unsigned`, {})
+        .then(response => {
+          console.log('response from transaction-execution: ', response);
 
-        dispatch({
-          type: FETCH_END
-        });
+          dispatch({
+            type: FETCH_END
+          });
 
-        dispatch({
-          type: TRANSACTION_EXECUTION,
-          payload: {
-            status: SAVING
-          }
-        });
+          dispatch({
+            type: TRANSACTION_EXECUTION,
+            payload: {
+              status: SAVING
+            }
+          });
 
         //Make a call to save transaction on USB
         return writeToUSB(response.data)
           .then(() => {
-            writeInfoToUSB(transaction).then(() => {
-            console.log('successfully written data to USB');
+            return writeInfoToUSB(transaction)
+              .then(() => {
+                console.log('successfully written data to USB');
+                dispatch({
+                  type: TRANSACTION_EXECUTION,
+                  payload: {
+                    status: SAVED
+                  }
+                });
+                //Update transaction status
+                const status = 'In Progress'
+                dispatch(updateTransactionStatus(transaction.transactionId, status));
+              })
+              .catch(error => {
+                dispatch(handleError(error, false));
+              });
+          })
+          .catch(error => {
             dispatch({
               type: TRANSACTION_EXECUTION,
               payload: {
-                status: SAVED
+                status: SAVE_ERROR
               }
             });
-            //Update transaction status
-            const status = 'In Progress'
-            dispatch(updateTransactionStatus(transaction.transactionId, status));
-          })
-          .catch(error => {
-            dispatch(handleError(error, false));
+            dispatch(handleError(error.response, false));
           });
-      })
-      .catch(error => {
-        dispatch({
-          type: TRANSACTION_EXECUTION,
-          payload: {
-            status: SAVE_ERROR
-          }
+        })
+        .catch(error => {
+          dispatch({
+            type: TRANSACTION_EXECUTION,
+            payload: {
+              status: CREATE_ERROR
+            }
+          });
+          dispatch(handleError(error.response, true));
         });
-        dispatch(handleError(error.response, false));
-      });
-    })
-    .catch(error => {
-      dispatch({
-        type: TRANSACTION_EXECUTION,
-        payload: {
-          status: CREATE_ERROR
-        }
-      });
-      dispatch(handleError(error.response, true));
-    });
-}
+  }
 }
 
 const updateTransactionStatus = (id, status) => {

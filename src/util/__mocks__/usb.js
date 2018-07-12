@@ -26,3 +26,20 @@ export const getUSBData = () => {
 
   return deferred.promise;
 }
+
+export const writeToUSB = () => {
+  console.log('executing MOCK writeToUSB');
+  var deferred = Q.defer();
+
+  deferred.resolve();
+
+  return deferred.promise;
+}
+
+export const writeInfoToUSB = () => {
+  var deferred = Q.defer();
+
+  deferred.resolve();
+
+  return deferred.promise;
+}

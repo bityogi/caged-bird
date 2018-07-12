@@ -1,18 +1,21 @@
 jest.mock('fs');
 jest.mock('util/axiosClient');
+jest.mock('util/usb');
 
 import { Thunk } from 'redux-testkit';
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
 import MockAdapter from 'axios-mock-adapter';
 
-import { client } from 'util/axiosClient';
+import { client, authClient } from 'util/axiosClient';
 import * as actions from 'actions';
 import * as types from 'actions/types';
+import * as status from 'util/transactionStatus';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 const mock = new MockAdapter(client);
+const authClientMock = new MockAdapter(authClient());
 
 describe('Transactions actions', () => {
 
@@ -70,19 +73,14 @@ describe('Transactions actions', () => {
 
   it('creates the right actions for transactionDetail', async () => {
 
+    mock
+      .onGet('/transactions/1')
+      .reply(200, data);
+
     return store.dispatch(actions.transactionDetail(data[0]))
       .then(() => {
         const dispatches = store.getActions();
-        expect(dispatches.length).toBe(5);
-      });
-
-  });
-
-  it('creates the right actions for transactionExecute', async () => {
-    return store.dispatch(actions.transactionExecute(data[0]))
-      .then(() => {
-        const dispatches = store.getActions();
-        expect(dispatches.length).toBe(5);
+        expect(dispatches.length).toBe(4);
       });
 
   });
@@ -92,4 +90,33 @@ describe('Transactions actions', () => {
 
     expect(dispatches.length).toBe(2);
   });
+
+  describe('transactionExecute: ', () => {
+
+    mock
+      .onAny('transactions/1/unsigned')
+      .reply(200, data);
+
+
+    it('creates the right actions for transactionExecute onPatch fails', async () => {
+      return store.dispatch(actions.transactionExecute(data[0]))
+        .then(() => {
+          const dispatches = store.getActions();
+          expect(dispatches.length).toBe(4);
+  
+          expect(dispatches[0]).toMatchObject({ type: types.FETCH_START});
+          expect(dispatches[1]).toMatchObject({ type: types.TRANSACTION_EXECUTION});
+          expect(dispatches[2]).toMatchObject({ type: types.TRANSACTION_EXECUTION,
+            payload: {
+              status: status.CREATE_ERROR
+            }
+          });
+          expect(dispatches[3]).toMatchObject({ type: types.FETCH_ERROR });
+        });
+  
+    });
+  });
+  
+
+  
 })
