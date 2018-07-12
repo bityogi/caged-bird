@@ -3,6 +3,7 @@ import _ from 'lodash';
 import { authClient } from 'util/axiosClient';
 import {
   SET_WALLET_FILES,
+  INITIALIZE_WALLET_FILES,
   FETCH_START,
   FETCH_END,
   FETCHING_SEED,
@@ -38,6 +39,7 @@ export const submitWallets = () => {
         dispatch({
           type: FETCH_END
         });
+        dispatch(initializeWalletFiles());
         dispatch(showNotification('Addresses imported', 'info'));
 
       })
@@ -55,6 +57,12 @@ export const importWallets = (files) => {
   return { 
     type: SET_WALLET_FILES, 
     payload: files 
+  }
+}
+
+const initializeWalletFiles = () => {
+  return {
+    type: INITIALIZE_WALLET_FILES
   }
 }
 
