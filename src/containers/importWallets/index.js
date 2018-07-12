@@ -10,7 +10,8 @@ import ImportForm from './form';
 
 import {
     getSeed,
-    importWallets
+    importWallets,
+    submitWallets,
 } from 'actions';
 
 const styles = {
@@ -29,8 +30,9 @@ class ImportWallets extends Component {
         this.props.getSeed();
     }
 
-    handleImportWallet(args) {
-        console.log('Handling file imports: ', args);
+    handleImportWallet() {
+        console.log('Handling file imports: ');
+        this.props.submitWallets();
     }
      
     render() {
@@ -74,7 +76,8 @@ class ImportWallets extends Component {
 
 const mapDispatchToProps = dispatch => bindActionCreators({
     getSeed,
-    importWallets
+    importWallets,
+    submitWallets
 }, dispatch)
   
 const mapStateToProps = (state) => ({

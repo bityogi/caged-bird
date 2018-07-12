@@ -48,9 +48,9 @@ const formStyles = {
 const validate = (values) => {
     const errors = {};
 
-    if (!values.addressFile || values.addressFile.length < 1) {
-        errors.addressFile =  'No files selected';
-    }
+    // if (!values.addressFile || values.addressFile.length < 1) {
+    //     errors.addressFile =  'No files selected';
+    // }
 
     return errors;
 }
@@ -75,7 +75,7 @@ class ImportForm extends Component {
     }
     render() {
         const { handleSubmit, onSubmit, submitting, wallets  } = this.props;
-        console.log('wallets: ', wallets);
+        
         return (
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div style={styles.formStyle}>
@@ -103,7 +103,7 @@ class ImportForm extends Component {
                      <RaisedButton
                       type="submit"
                       primary={true}
-                      disabled={wallets.length < 1}
+                      disabled={submitting || wallets.length < 1}
                       icon={
                           submitting && (
                               <CircularProgress

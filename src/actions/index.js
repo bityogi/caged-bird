@@ -4,3 +4,4 @@ export * from './transactions';
 export * from './broadcast';
 export * from './alert';
 export * from './wallet';
+export * from './util';
