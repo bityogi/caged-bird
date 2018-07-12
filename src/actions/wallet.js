@@ -41,7 +41,7 @@ export const submitWallets = () => {
       })
       .catch(error => {
         console.log('Error importing wallet addresses: ', error);
-        dispatch(handleError(error, true));
+        dispatch(handleError(error.response, true));
         dispatch(showNotification('Login Failed', 'warning'));
 
       });
