@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import { client } from 'util/axiosClient';
+import { authClient } from 'util/axiosClient';
 import {
   SET_WALLET_FILES,
   FETCH_START,
@@ -25,12 +25,14 @@ export const submitWallets = () => {
     const wallet = getState().wallet;
     let formData = new FormData();
 
+    console.log('wallet (from state): ', wallet);
+
     _.map(wallet.wallets, w => {
       formData.append('FileList', w);
     })
     
-
-    return client.post(`/clients/${wallet.seed}/coldWallets`, formData)
+    
+    return authClient().post(`/seeds/${wallet.seed.seed}/coldWallets`, formData)
       .then(response => {
         console.log('resonse from authenticate: ', response);
         dispatch({
@@ -40,10 +42,10 @@ export const submitWallets = () => {
 
       })
       .catch(error => {
-        console.log('Error importing wallet addresses: ', error);
+        console.log('Error importing wallet addresses: ', error.response);
         dispatch(handleError(error.response, true));
-        dispatch(showNotification('Login Failed', 'warning'));
-
+        dispatch(showNotification('Error importing wallet addresses', 'warning'));
+        
       });
 
   }
