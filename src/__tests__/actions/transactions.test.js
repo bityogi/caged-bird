@@ -93,12 +93,11 @@ describe('Transactions actions', () => {
 
   describe('transactionExecute: ', () => {
 
-    mock
-      .onAny('transactions/1/unsigned')
-      .reply(200, data);
-
-
     it('creates the right actions for transactionExecute onPatch fails', async () => {
+      mock
+      .onPatch('/transactions/1/unsigned')
+      .reply(500, { message: 'Error occured while executing transaction' });
+
       return store.dispatch(actions.transactionExecute(data[0]))
         .then(() => {
           const dispatches = store.getActions();
@@ -115,6 +114,51 @@ describe('Transactions actions', () => {
         });
   
     });
+
+    it('creates the right actions for transactionExecute onPatch fails', async () => {
+      mock
+        .onPatch('/transactions/1/unsigned')
+        .reply(200, {});
+
+      mock
+        .onPatch('transactions/1/In Progress')
+        .reply(200, {});
+      
+
+      return store.dispatch(actions.transactionExecute(data[0]))
+        .then(() => {
+          const dispatches = store.getActions();
+          expect(dispatches.length).toBe(7);
+  
+          expect(dispatches[0]).toMatchObject({ type: types.FETCH_START});
+          expect(dispatches[1]).toMatchObject({ type: types.TRANSACTION_EXECUTION,
+            payload: {
+              status: status.CREATING
+            }
+          });
+          expect(dispatches[2]).toMatchObject({ type: types.FETCH_END });
+          expect(dispatches[3]).toMatchObject({ type: types.TRANSACTION_EXECUTION,
+            payload: {
+              status: status.SAVING
+            }
+          });
+          expect(dispatches[4]).toMatchObject({ type: types.TRANSACTION_EXECUTION,
+            payload: {
+              status: status.SAVED
+            }
+          });
+
+          // These actions are related to updateTransactionStatus
+          expect(dispatches[5]).toMatchObject({ type: types.FETCH_START });
+          expect(dispatches[6]).toMatchObject({ type: types.TRANSACTION_EXECUTION,
+            payload: {
+              status: status.UPDATING_STATUS
+            }
+          });
+        });
+  
+    });
+
   });
   
 

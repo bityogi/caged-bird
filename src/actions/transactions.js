@@ -165,6 +165,7 @@ export const transactionExecute = (transaction) => {
           });
         })
         .catch(error => {
+          console.error('error response from transacation-execution: ', error);
           dispatch({
             type: TRANSACTION_EXECUTION,
             payload: {
@@ -205,8 +206,8 @@ const updateTransactionStatus = (id, status) => {
 
       })
       .catch(error => {
-        console.log('error while updating status');
-        dispatch(handleError(error, true));
+        console.error('error while updating status: ', error);
+        dispatch(handleError(error.response, true));
       })
   }
 }
