@@ -51,8 +51,8 @@
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.14.1",
-    "electron": "^1.8.4",
-    "electron-builder": "^20.8.1",
+    "electron": "latest",
+    "electron-builder": "latest",
     "electron-prebuilt": "^1.4.13",
     "enzyme": "^3.3.0",
     "foreman": "^2.0.0",
@@ -66,14 +66,12 @@
   "build": {
     "productName": "CagedBird",
     "appId": "com.dacc.cagedbird",
+    "remoteBuild": false,
     "extends": null,
     "files": [
       "build/**/*",
       "node_modules/**/*"
     ],
-    "directories": {
-      "buildResources": "assets"
-    },
     "mac": {
       "artifactName": "${productName}-${version}-osx.${ext}",
       "category": "public.app-category.productivity",
