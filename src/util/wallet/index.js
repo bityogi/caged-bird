@@ -6,7 +6,8 @@ export const decodeTransaction = (coin, hex, isTestnet) => {
     let deferred = Q.defer();
     console.log('decoding tx for cointype: %s with hex: %s and isTest: %s', coin, hex, isTestnet);
     try {
-        const wallet = WalletFactory.getWallet(coin, isTestnet);
+        const network = isTestnet ? 'test' : 'main';
+        const wallet = WalletFactory.getWallet(coin, network);
         console.log('Received wallet: ', wallet);
 
         wallet.decodeTransaction(hex)
