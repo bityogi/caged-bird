@@ -45,8 +45,8 @@ export const signedTransaction = () => {
         };
         let rawTx = data.payload.replace(/(\r\n\t|\n|\r\t)/gm, '');
         rawTx = rawTx.replace(/"/g, '');
-        
-        return decodeTransaction(data.ticker, rawTx)
+        const isTestnet = (data.unsignedInfo.Testnet === true) ? true : false;
+        return decodeTransaction(data.ticker, rawTx, isTestnet)
           .then((tx) => {
             
             dispatch({

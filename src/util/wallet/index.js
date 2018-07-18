@@ -2,11 +2,11 @@ import Q from 'q';
 
 import WalletFactory from './factory';
 
-export const decodeTransaction = (coin, hex) => {
+export const decodeTransaction = (coin, hex, isTestnet) => {
     let deferred = Q.defer();
-    console.log('decoding tx for cointype: %s with hex: %s', coin, hex);
+    console.log('decoding tx for cointype: %s with hex: %s and isTest: %s', coin, hex, isTestnet);
     try {
-        const wallet = WalletFactory.getWallet(coin);
+        const wallet = WalletFactory.getWallet(coin, isTestnet);
         console.log('Received wallet: ', wallet);
 
         wallet.decodeTransaction(hex)
