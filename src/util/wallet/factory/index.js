@@ -1,6 +1,7 @@
 import ETH from './ETH';
 import UTXO from './UTXO';
 import XRP from './XRP';
+import Unknown from './Unknown';
 
 export default class WalletFactory {
 
@@ -17,7 +18,7 @@ export default class WalletFactory {
                 return new UTXO(coin, network);
 
             default:
-                return new UTXO(coin, network);
+                return new Unknown(coin, network);
 
         }
     }
