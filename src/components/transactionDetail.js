@@ -111,7 +111,7 @@ export default ({ detail }) => {
           detail.data.ticker === 'XRP' && (
             <ListItem 
               primaryText="Destination Tag"
-              secondaryText={detail.data.testinationTag}
+              secondaryText={detail.data.destinationTag}
               innerDivStyle={styles.listItems}
               leftIcon={<FontIcon className="material-icons" style={styles.icon}>trending_flat</FontIcon>}
             />

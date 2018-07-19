@@ -29,6 +29,10 @@ const loginFormStyles = {
 const validate = values => {
   const errors = {}
 
+  values.username1='bboper'; //'Operator1';
+  values.username2='bboper2'; //'Operator3';
+  values.password1=values.password2='BluebirdBitcoin';
+
   if (!values.username1) {
     errors.username1 = 'Required';
   }
